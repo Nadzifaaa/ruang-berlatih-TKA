@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RUANG BERLATIH TKA - Belajar • Berlatih • Berprestasi</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- KaTeX CSS & JS for Fast Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <!-- MathJax Config & Library (as Fallback Engine) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: '#7565C9',
+              mint: '#A9D9C5',
+              peach: '#FFCF91',
+              cream: '#F8F7F2',
+              white: '#FFFFFF',
+              navy: '#29283A',
+              purpleLight: '#EEEBFF',
+              mintLight: '#E8F6F0',
+              peachLight: '#FFF4E5',
+              redSoft: '#FF8B8B',
+              greenSoft: '#6BCB77'
+            }
+          },
+          fontFamily: {
+            sans: ['Nunito', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #F8F7F2;
+      color: #29283A;
+      font-family: 'Nunito', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .soft-shadow {
+      box-shadow: 0 10px 25px -5px rgba(117, 101, 201, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F8F7F2;
+      border-radius: 8px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #C2BAEB;
+      border-radius: 8px;
+    }
+    button, [role="button"] {
+      cursor: pointer !important;
+      touch-action: manipulation;
+    }
+    .katex-display {
+      margin: 0.5em 0 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between custom-scrollbar bg-brand-cream text-brand-navy">
+
+  <!-- NAVBAR UTAMA -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-brand-purple/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo Brand -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('home')">
+        <div class="w-10 h-10 rounded-xl bg-brand-purple text-white flex items-center justify-center font-black text-xl shadow-md transform hover:scale-105 transition">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-lg sm:text-xl text-brand-navy tracking-tight leading-none">RUANG BERLATIH <span class="text-brand-purple">TKA</span></h1>
+          <p class="text-[10px] sm:text-xs text-gray-500 font-semibold tracking-wider uppercase">Belajar • Berlatih • Berprestasi</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links (Desktop) -->
+      <nav class="hidden md:flex items-center space-x-6">
+        <button onclick="navigateTo('home')" class="nav-btn font-bold text-gray-600 hover:text-brand-purple transition flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-house text-xs"></i> Beranda
+        </button>
+        <button onclick="navigateTo('subjects')" class="nav-btn font-bold text-gray-600 hover:text-brand-purple transition flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-book-open text-xs"></i> Mata Pelajaran
+        </button>
+        <button onclick="navigateTo('materials')" class="nav-btn font-bold text-gray-600 hover:text-brand-purple transition flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-graduation-cap text-xs"></i> Materi Belajar
+        </button>
+        <button onclick="navigateTo('teacher')" class="nav-btn font-bold text-gray-600 hover:text-brand-purple transition flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-chalkboard-user text-xs"></i> Dashboard Guru
+        </button>
+        <button onclick="navigateTo('about')" class="nav-btn font-bold text-gray-600 hover:text-brand-purple transition flex items-center gap-2 text-sm">
+          <i class="fa-solid fa-circle-info text-xs"></i> Tentang
+        </button>
+      </nav>
+
+      <!-- Student Profile Quick Widget -->
+      <div class="flex items-center space-x-2">
+        <button onclick="openNameModal()" class="flex items-center gap-2 bg-brand-purpleLight hover:bg-brand-purple/20 text-brand-purple px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold transition">
+          <div class="w-7 h-7 rounded-full bg-brand-purple text-white flex items-center justify-center font-bold text-xs" id="navAvatarInitials">
+            ST
+          </div>
+          <span id="navStudentName" class="max-w-[90px] sm:max-w-[130px] truncate">Siswa</span>
+          <i class="fa-solid fa-pen text-[10px] opacity-60"></i>
+        </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button onclick="toggleMobileNav()" class="md:hidden w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Menu Dropdown -->
+    <div id="mobileNavMenu" class="hidden md:hidden bg-white border-b border-gray-200 px-4 py-3 space-y-2">
+      <button onclick="navigateTo('home'); toggleMobileNav();" class="w-full text-left font-bold text-gray-700 py-2 px-3 rounded-lg hover:bg-brand-purpleLight flex items-center gap-3 text-sm">
+        <i class="fa-solid fa-house text-brand-purple"></i> Beranda
+      </button>
+      <button onclick="navigateTo('subjects'); toggleMobileNav();" class="w-full text-left font-bold text-gray-700 py-2 px-3 rounded-lg hover:bg-brand-purpleLight flex items-center gap-3 text-sm">
+        <i class="fa-solid fa-book-open text-brand-purple"></i> Mata Pelajaran
+      </button>
+      <button onclick="navigateTo('materials'); toggleMobileNav();" class="w-full text-left font-bold text-gray-700 py-2 px-3 rounded-lg hover:bg-brand-purpleLight flex items-center gap-3 text-sm">
+        <i class="fa-solid fa-graduation-cap text-brand-purple"></i> Materi Belajar
+      </button>
+      <button onclick="navigateTo('teacher'); toggleMobileNav();" class="w-full text-left font-bold text-gray-700 py-2 px-3 rounded-lg hover:bg-brand-purpleLight flex items-center gap-3 text-sm">
+        <i class="fa-solid fa-chalkboard-user text-brand-purple"></i> Dashboard Guru
+      </button>
+      <button onclick="navigateTo('about'); toggleMobileNav();" class="w-full text-left font-bold text-gray-700 py-2 px-3 rounded-lg hover:bg-brand-purpleLight flex items-center gap-3 text-sm">
+        <i class="fa-solid fa-circle-info text-brand-purple"></i> Tentang Aplikasi
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENT CONTAINER -->
+  <main id="mainContainer" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Views rendered dynamically -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-brand-purple/10 mt-12 py-6 text-center text-sm text-gray-600">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-2">
+        <div class="w-6 h-6 rounded-lg bg-brand-purple text-white flex items-center justify-center text-xs font-bold">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="font-bold text-brand-navy">RUANG BERLATIH TKA</span>
+        <span class="text-xs text-gray-400">| Kelas VI MI</span>
+      </div>
+      <p class="text-xs text-gray-500 font-medium">
+        Dikembangkan dengan sepenuh hati oleh <button onclick="navigateTo('about')" class="font-bold text-brand-purple hover:underline">Bu Nadzif ❤️</button>
+      </p>
+      <div class="text-xs text-gray-400">
+        "Sebuah ruang belajar untuk tumbuh, berlatih, dan meraih prestasi bersama."
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL GANTI NAMA SISWA -->
+  <div id="nameModal" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full soft-shadow transform transition-all scale-100">
+      <div class="text-center mb-6">
+        <div class="w-16 h-16 bg-brand-purpleLight text-brand-purple rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+          <i class="fa-solid fa-user-graduate"></i>
+        </div>
+        <h3 class="text-xl font-extrabold text-brand-navy">Halo, Pejuang TKA!</h3>
+        <p class="text-xs sm:text-sm text-gray-500">Masukkan nama lengkapmu agar hasil latihan terdata dengan rapi.</p>
+      </div>
+      <form onsubmit="saveStudentName(event)">
+        <div class="mb-5">
+          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nama Lengkap Siswa</label>
+          <input type="text" id="studentNameInput" class="w-full px-4 py-3 rounded-2xl border-2 border-brand-purple/20 focus:border-brand-purple focus:outline-none font-bold text-brand-navy placeholder-gray-400 text-base" placeholder="Contoh: Ahmad Raihan" required />
+        </div>
+        <div class="flex gap-3">
+          <button type="button" onclick="closeNameModal()" class="w-1/2 py-3 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold text-sm transition">Batal</button>
+          <button type="submit" class="w-1/2 py-3 rounded-2xl bg-brand-purple hover:bg-opacity-90 text-white font-bold text-sm transition shadow-lg shadow-brand-purple/30">Simpan Nama</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL OPSI SIMULASI / LATIHAN -->
+  <div id="startModal" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full soft-shadow">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <span class="text-xs font-black uppercase tracking-widest text-brand-purple" id="modalPkgBadge">Paket A</span>
+          <h3 class="text-2xl font-extrabold text-brand-navy" id="modalPkgTitle">Misi Pemula</h3>
+        </div>
+        <button onclick="closeStartModal()" class="text-gray-400 hover:text-gray-600 text-xl font-bold w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <p class="text-xs sm:text-sm text-gray-600 mb-6" id="modalPkgDesc">Pilih mode pengerjaan yang kamu inginkan untuk paket latihan ini.</p>
+
+      <div class="space-y-4 mb-6">
+        <!-- Mode Latihan -->
+        <label class="block cursor-pointer">
+          <input type="radio" name="examMode" value="practice" checked class="peer hidden" onchange="toggleTimerOption(false)" />
+          <div class="p-4 rounded-2xl border-2 border-gray-200 peer-checked:border-brand-purple peer-checked:bg-brand-purpleLight/30 transition flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-brand-mint text-brand-navy flex items-center justify-center shrink-0 text-lg font-bold">
+              <i class="fa-solid fa-couch"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-brand-navy text-sm">Mode Latihan (Santai)</h4>
+              <p class="text-xs text-gray-500">Pembahasan langsung muncul setelah menjawab tiap soal. Tanpa batas waktu.</p>
+            </div>
+          </div>
+        </label>
+
+        <!-- Mode Simulasi -->
+        <label class="block cursor-pointer">
+          <input type="radio" name="examMode" value="simulation" class="peer hidden" onchange="toggleTimerOption(true)" />
+          <div class="p-4 rounded-2xl border-2 border-gray-200 peer-checked:border-brand-purple peer-checked:bg-brand-purpleLight/30 transition flex items-start gap-4">
+            <div class="w-10 h-10 rounded-xl bg-brand-peach text-brand-navy flex items-center justify-center shrink-0 text-lg font-bold">
+              <i class="fa-solid fa-stopwatch"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-brand-navy text-sm">Mode Simulasi Ujian</h4>
+              <p class="text-xs text-gray-500">Menggunakan timer. Kunci jawaban & pembahasan baru bisa dilihat setelah selesai.</p>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <!-- Durasi Waktu (Muncul jika Simulasi) -->
+      <div id="timerSelectContainer" class="hidden mb-6 bg-brand-cream p-4 rounded-2xl border border-brand-purple/10">
+        <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Pilih Batas Waktu Ujian:</label>
+        <div class="grid grid-cols-3 gap-3">
+          <button type="button" onclick="setSimDuration(30)" class="timer-btn border-2 border-brand-purple bg-white text-brand-purple font-bold py-2 rounded-xl text-xs sm:text-sm transition">30 Menit</button>
+          <button type="button" onclick="setSimDuration(45)" class="timer-btn border-2 border-transparent bg-white text-gray-600 font-bold py-2 rounded-xl text-xs sm:text-sm transition">45 Menit</button>
+          <button type="button" onclick="setSimDuration(60)" class="timer-btn border-2 border-transparent bg-white text-gray-600 font-bold py-2 rounded-xl text-xs sm:text-sm transition">60 Menit</button>
+        </div>
+      </div>
+
+      <button onclick="confirmStartQuiz()" class="w-full py-4 rounded-2xl bg-brand-purple hover:bg-opacity-90 text-white font-extrabold text-base transition shadow-lg shadow-brand-purple/30 flex items-center justify-center gap-2">
+        <span>Mulai Kerjakan Soal</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIKA APLIKASI -->
+  <script>
+    // Safe LocalStorage Helper
+    function getStoredData(key, fallback) {
+      try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : fallback;
+      } catch(e) {
+        return fallback;
+      }
+    }
+
+    function setStoredData(key, value) {
+      try {
+        localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value));
+      } catch(e) {
+        console.warn('LocalStorage save error:', e);
+      }
+    }
+
+    // Helper rendering Matematika LaTeX (KaTeX dengan MathJax fallback)
+    function renderMathTypesetting() {
+      setTimeout(() => {
+        const main = document.getElementById('mainContainer');
+        if (!main) return;
+
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(main, {
+            delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+            ],
+            throwOnError: false
+          });
+        }
+
+        if (window.MathJax && typeof window.MathJax.typesetPromise === 'function') {
+          window.MathJax.typesetPromise([main]).catch(err => console.warn('MathJax render error:', err));
+        }
+      }, 50);
+    }
+
+    // ==========================================
+    // DATA BANK SOAL TKA (100 SOAL KELAS VI MI)
+    // ==========================================
+    const packagesData = [
+      {
+        id: 'pkg-a',
+        code: 'Paket A',
+        name: 'Misi Pemula',
+        tagline: 'Langkah awal membangun fondasi TKA',
+        subject: 'Bahasa Indonesia & Matematika',
+        questionsCount: 20,
+        level: 'Dasar (Pemula)',
+        color: 'from-purple-500 to-indigo-600',
+        lightBg: 'bg-purple-50 text-purple-700',
+        btnColor: 'bg-purple-600',
+        badge: 'Tahap 1'
+      },
+      {
+        id: 'pkg-b',
+        code: 'Paket B',
+        name: 'Misi Penjelajah',
+        tagline: 'Memperluas pemahaman wacana dan hitungan',
+        subject: 'Bahasa Indonesia & Matematika',
+        questionsCount: 20,
+        level: 'Menengah',
+        color: 'from-emerald-500 to-teal-600',
+        lightBg: 'bg-emerald-50 text-emerald-700',
+        btnColor: 'bg-teal-600',
+        badge: 'Tahap 2'
+      },
+      {
+        id: 'pkg-c',
+        code: 'Paket C',
+        name: 'Misi Tantangan',
+        tagline: 'Uji kemampuan penalaran dan logika tingkat lanjut',
+        subject: 'Bahasa Indonesia & Matematika',
+        questionsCount: 20,
+        level: 'Tinggi',
+        color: 'from-amber-500 to-orange-600',
+        lightBg: 'bg-amber-50 text-amber-700',
+        btnColor: 'bg-amber-600',
+        badge: 'Tahap 3'
+      },
+      {
+        id: 'pkg-d',
+        code: 'Paket D',
+        name: 'Misi Juara',
+        tagline: 'Penguasaan penuh tipe soal HOTS TKA',
+        subject: 'Bahasa Indonesia & Matematika',
+        questionsCount: 20,
+        level: 'HOTS Advance',
+        color: 'from-rose-500 to-pink-600',
+        lightBg: 'bg-rose-50 text-rose-700',
+        btnColor: 'bg-rose-600',
+        badge: 'Tahap 4'
+      },
+      {
+        id: 'pkg-e',
+        code: 'Paket E',
+        name: 'Misi Master TKA',
+        tagline: 'Simulasi komprehensif penentu kelulusan berprestasi',
+        subject: 'Bahasa Indonesia & Matematika',
+        questionsCount: 20,
+        level: 'Master / Prediksi',
+        color: 'from-cyan-500 to-blue-600',
+        lightBg: 'bg-blue-50 text-blue-700',
+        btnColor: 'bg-blue-600',
+        badge: 'Tahap 5'
+      }
+    ];
+
+    // GENERATOR BANK SOAL 100 SOAL LENGKAP
+    function generateQuestionBank() {
+      let globalId = 1;
+      const questions = [];
+      const readingGroups = [{"packageId": "pkg-a", "stimulus": "<strong>Piket Kelas yang Tertib</strong><br>Setiap Jumat, kelompok piket VI-A membersihkan kelas sebelum pelajaran dimulai. Rani menyapu lantai, Bima merapikan buku di pojok baca, sedangkan Seno mengelap jendela. Setelah selesai, mereka memeriksa kembali sudut kelas agar tidak ada sampah tertinggal. Guru memuji kerja sama mereka.", "questions": [{"type": "PG", "topic": "Gagasan utama", "question": "Apa gagasan utama paragraf tersebut?", "options": ["A. Guru memberikan hadiah kepada siswa.", "B. Kelompok piket bekerja sama menjaga kebersihan kelas.", "C. Seno selalu datang paling pagi.", "D. Pojok baca menjadi tempat paling ramai."], "correctKeys": [1], "explanation": "Teks berfokus pada pembagian tugas dan kerja sama kelompok piket dalam menjaga kebersihan kelas."}, {"type": "PG", "topic": "Informasi tersurat", "question": "Mengapa mereka memeriksa kembali sudut kelas setelah membersihkan?", "options": ["A. Agar dapat segera pulang.", "B. Agar guru memberi nilai tambahan.", "C. Untuk memastikan tidak ada sampah yang tertinggal.", "D. Untuk mencari buku yang hilang."], "correctKeys": [2], "explanation": "Kalimat terakhir kegiatan piket menyebutkan pemeriksaan ulang dilakukan agar tidak ada sampah tertinggal."}, {"type": "PG", "topic": "Menemukan informasi", "question": "Siapakah yang bertugas merapikan buku di pojok baca?", "options": ["A. Rani.", "B. Bima.", "C. Seno.", "D. Guru."], "correctKeys": [1], "explanation": "Teks secara langsung menyatakan bahwa Bima merapikan buku di pojok baca."}, {"type": "PGK-MCMA", "topic": "Menghubungkan informasi", "question": "Pilih DUA tindakan yang menunjukkan pembagian tugas dalam kelompok piket.", "options": ["A. Rani menyapu lantai.", "B. Guru memuji siswa.", "C. Bima merapikan buku.", "D. Siswa meninggalkan kelas."], "correctKeys": [0, 2], "explanation": "A dan C merupakan tugas yang dilakukan anggota kelompok. B adalah tanggapan guru, sedangkan D tidak disebutkan."}, {"type": "BS", "topic": "Evaluasi informasi", "question": "Pernyataan: 'Kelompok piket hanya membersihkan kelas tanpa memeriksa hasilnya.' Benar atau salah?", "options": ["Benar", "Salah"], "correctKeys": [1], "explanation": "Pernyataan salah. Mereka memeriksa kembali sudut kelas setelah selesai membersihkan."}]}, {"packageId": "pkg-a", "stimulus": "<strong>Surat untuk Sahabat</strong><br>Mira menerima surat dari sahabatnya, Lala, yang pindah ke kota lain. Lala bercerita bahwa ia belum memiliki banyak teman di sekolah baru. Mira membalas surat itu dengan menceritakan kegiatan klub membaca dan menyarankan Lala mengikuti kegiatan yang disukainya. Mira yakin teman baru dapat ditemukan melalui kegiatan bersama.", "questions": [{"type": "PG", "topic": "Memahami konflik", "question": "Masalah yang dialami Lala di sekolah barunya adalah ...", "options": ["A. Tidak memiliki buku pelajaran.", "B. Belum memiliki banyak teman.", "C. Tidak menyukai kegiatan membaca.", "D. Ingin pindah kembali ke desa."], "correctKeys": [1], "explanation": "Dalam suratnya, Lala menyampaikan bahwa ia belum memiliki banyak teman di sekolah baru."}, {"type": "PG", "topic": "Informasi tersurat", "question": "Saran apa yang diberikan Mira kepada Lala?", "options": ["A. Menghindari semua kegiatan sekolah.", "B. Mengikuti kegiatan yang disukai.", "C. Segera pindah sekolah.", "D. Menunggu teman datang sendiri."], "correctKeys": [1], "explanation": "Mira menyarankan Lala mengikuti kegiatan yang disukainya agar dapat bertemu teman baru."}, {"type": "PG", "topic": "Menganalisis tokoh", "question": "Sifat Mira yang paling tampak dalam cerita adalah ...", "options": ["A. Acuh tak acuh.", "B. Pemarah.", "C. Peduli dan memberi dukungan.", "D. Mudah menyerah."], "correctKeys": [2], "explanation": "Mira menanggapi cerita Lala dengan perhatian dan saran yang membangun."}, {"type": "PGK-MCMA", "topic": "Memadukan informasi", "question": "Pilih DUA informasi yang benar berdasarkan cerita.", "options": ["A. Lala pindah ke kota lain.", "B. Mira melarang Lala mengikuti kegiatan sekolah.", "C. Mira mengikuti klub membaca.", "D. Lala sudah memiliki banyak sahabat."], "correctKeys": [0, 2], "explanation": "A dan C dinyatakan langsung dalam cerita. B dan D bertentangan dengan isi cerita."}, {"type": "BS", "topic": "Amanat", "question": "Amanat cerita tersebut adalah kita dapat membantu teman dengan perhatian dan saran yang baik.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Pernyataan benar. Mira menunjukkan kepedulian kepada Lala melalui surat dan saran positif."}]}, {"packageId": "pkg-b", "stimulus": "<strong>Perpustakaan Keliling</strong><br>Perpustakaan keliling datang ke Desa Sukamaju setiap Selasa pukul 09.00–12.00. Mobil perpustakaan berhenti di halaman balai desa. Pengunjung boleh membaca di tempat atau meminjam paling banyak dua buku selama tujuh hari. Pada bulan ini, petugas menambah koleksi buku sains dan cerita rakyat.", "questions": [{"type": "PG", "topic": "Informasi tersurat", "question": "Pada hari apa perpustakaan keliling datang ke Desa Sukamaju?", "options": ["A. Senin.", "B. Selasa.", "C. Rabu.", "D. Jumat."], "correctKeys": [1], "explanation": "Jadwal pada teks menyebutkan perpustakaan keliling datang setiap Selasa."}, {"type": "PG", "topic": "Menafsirkan informasi waktu", "question": "Jika seorang anak meminjam buku pada hari Selasa, kapan paling lambat buku dikembalikan sesuai batas tujuh hari?", "options": ["A. Senin berikutnya.", "B. Selasa berikutnya.", "C. Rabu berikutnya.", "D. Jumat berikutnya."], "correctKeys": [1], "explanation": "Tujuh hari setelah Selasa adalah Selasa berikutnya."}, {"type": "PG", "topic": "Inferensi", "question": "Mengapa petugas menambah koleksi buku sains dan cerita rakyat?", "options": ["A. Agar pilihan bacaan pengunjung semakin beragam.", "B. Agar mobil menjadi lebih berat.", "C. Agar pengunjung tidak boleh meminjam.", "D. Agar jadwal kunjungan berubah."], "correctKeys": [0], "explanation": "Penambahan dua jenis koleksi menunjukkan upaya memperkaya pilihan bacaan. Ini merupakan simpulan yang masuk akal dari teks."}, {"type": "PGK-MCMA", "topic": "Menemukan aturan", "question": "Pilih DUA aturan layanan perpustakaan keliling.", "options": ["A. Pengunjung boleh membaca di tempat.", "B. Setiap pengunjung harus membeli buku.", "C. Peminjaman maksimal dua buku.", "D. Buku harus dikembalikan dalam satu bulan."], "correctKeys": [0, 2], "explanation": "Aturan yang tertulis adalah membaca di tempat atau meminjam paling banyak dua buku selama tujuh hari."}, {"type": "BS", "topic": "Menghitung informasi", "question": "Perpustakaan keliling melayani pengunjung selama tiga jam setiap Selasa.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Pukul 09.00 sampai 12.00 berlangsung selama tiga jam."}]}, {"packageId": "pkg-b", "stimulus": "<strong>Layangan Putus</strong><br>Angin sore bertiup cukup kencang ketika Dito bermain layang-layang bersama adiknya. Tiba-tiba benang layangan terlepas dan layangan tersangkut di pohon mangga. Dito hampir memanjat, tetapi adiknya mengingatkan bahwa batang pohon licin. Mereka kemudian meminta bantuan Pak Rudi yang mengambil layangan dengan tangga yang aman.", "questions": [{"type": "PG", "topic": "Sebab-akibat", "question": "Mengapa Dito tidak jadi memanjat pohon?", "options": ["A. Ia takut pada layangan.", "B. Adiknya mengingatkan bahwa pohon licin.", "C. Pak Rudi melarang mereka bermain.", "D. Hari sudah terlalu pagi."], "correctKeys": [1], "explanation": "Adiknya mengingatkan bahwa batang pohon licin sehingga memanjat berbahaya."}, {"type": "PG", "topic": "Informasi tersurat", "question": "Tokoh yang membantu mengambil layangan adalah ...", "options": ["A. Dito.", "B. Adik Dito.", "C. Pak Rudi.", "D. Penjual layangan."], "correctKeys": [2], "explanation": "Teks menyatakan mereka meminta bantuan Pak Rudi."}, {"type": "PG", "topic": "Menyimpulkan tindakan", "question": "Keputusan Dito meminta bantuan menunjukkan bahwa ia ...", "options": ["A. Mengutamakan keselamatan.", "B. Tidak menyukai adiknya.", "C. Ingin merusak pohon.", "D. Tidak mau bermain lagi."], "correctKeys": [0], "explanation": "Dito memilih cara yang lebih aman daripada mengambil risiko memanjat pohon licin."}, {"type": "PGK-MCMA", "topic": "Urutan peristiwa", "question": "Pilih DUA peristiwa yang terjadi dalam cerita.", "options": ["A. Benang layangan terlepas.", "B. Layangan jatuh ke sungai.", "C. Layangan tersangkut di pohon mangga.", "D. Dito memanjat sampai puncak pohon."], "correctKeys": [0, 2], "explanation": "Peristiwa yang sesuai adalah benang terlepas dan layangan tersangkut di pohon mangga."}, {"type": "BS", "topic": "Amanat", "question": "Cerita mengajarkan agar kita tidak memaksakan diri ketika menghadapi keadaan berbahaya.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Benar. Dito memilih meminta bantuan demi keselamatan."}]}, {"packageId": "pkg-c", "stimulus": "<strong>Festival Pangan Lokal</strong><br>Madrasah mengadakan Festival Pangan Lokal untuk mengenalkan bahan makanan dari daerah sekitar. Kelompok pertama menyajikan jagung, kelompok kedua mengolah singkong, dan kelompok ketiga membuat minuman dari jahe. Pengunjung dapat membaca kartu informasi tentang asal bahan, cara pengolahan, dan kandungan gizinya. Panitia mengurangi penggunaan kemasan sekali pakai.", "questions": [{"type": "PG", "topic": "Tujuan teks", "question": "Tujuan utama Festival Pangan Lokal adalah ...", "options": ["A. Mengenalkan bahan makanan daerah sekitar.", "B. Mengadakan lomba olahraga.", "C. Menjual seluruh peralatan dapur.", "D. Mengganti semua makanan pokok."], "correctKeys": [0], "explanation": "Kalimat pertama menyebutkan tujuan festival, yaitu mengenalkan bahan makanan dari daerah sekitar."}, {"type": "PG", "topic": "Informasi rinci", "question": "Bahan yang diolah menjadi minuman oleh kelompok ketiga adalah ...", "options": ["A. Jagung.", "B. Singkong.", "C. Jahe.", "D. Kedelai."], "correctKeys": [2], "explanation": "Kelompok ketiga membuat minuman dari jahe."}, {"type": "PG", "topic": "Fungsi informasi", "question": "Apa manfaat kartu informasi bagi pengunjung?", "options": ["A. Menentukan harga tiket.", "B. Mengetahui asal, pengolahan, dan gizi bahan.", "C. Menghitung jumlah panitia.", "D. Memilih kelompok pemenang."], "correctKeys": [1], "explanation": "Kartu informasi berisi asal bahan, cara pengolahan, dan kandungan gizinya."}, {"type": "PGK-MCMA", "topic": "Evaluasi tindakan", "question": "Pilih DUA tindakan yang mendukung kegiatan ramah lingkungan.", "options": ["A. Mengurangi kemasan sekali pakai.", "B. Membuang sisa makanan ke sungai.", "C. Menggunakan bahan pangan lokal.", "D. Membakar seluruh kemasan plastik."], "correctKeys": [0, 2], "explanation": "Mengurangi kemasan sekali pakai dan mengenalkan pangan lokal mendukung kegiatan yang lebih bertanggung jawab terhadap lingkungan."}, {"type": "BS", "topic": "Membandingkan informasi", "question": "Semua kelompok dalam festival menyajikan bahan makanan yang sama.", "options": ["Benar", "Salah"], "correctKeys": [1], "explanation": "Salah. Kelompok menyajikan jagung, singkong, dan jahe yang berbeda."}]}, {"packageId": "pkg-c", "stimulus": "<strong>Kucing di Teras</strong><br>Selama tiga hari, Nala melihat seekor kucing kecil berlindung di teras rumah saat hujan. Pada hari pertama, ia hanya meletakkan mangkuk air. Hari berikutnya, ia meminta izin kepada ibu untuk memberi makanan. Setelah memastikan tidak ada pemilik yang mencari, keluarga Nala membawa kucing itu ke dokter hewan untuk diperiksa.", "questions": [{"type": "PG", "topic": "Menafsirkan tindakan", "question": "Mengapa Nala meminta izin kepada ibunya sebelum memberi makanan?", "options": ["A. Karena ia ingin menjual kucing.", "B. Karena ia perlu meminta persetujuan keluarga.", "C. Karena kucing tidak boleh minum.", "D. Karena hujan sudah berhenti."], "correctKeys": [1], "explanation": "Nala meminta izin kepada ibu sebelum melakukan tindakan berikutnya; cerita menonjolkan sikap bertanggung jawab."}, {"type": "PG", "topic": "Urutan waktu", "question": "Apa yang dilakukan Nala pada hari pertama?", "options": ["A. Membawa kucing ke dokter.", "B. Mencari pemilik kucing.", "C. Meletakkan mangkuk air.", "D. Membeli kandang."], "correctKeys": [2], "explanation": "Teks menyatakan pada hari pertama Nala meletakkan mangkuk air."}, {"type": "PG", "topic": "Sebab-akibat", "question": "Mengapa keluarga membawa kucing ke dokter hewan?", "options": ["A. Agar kucing diperiksa kesehatannya.", "B. Agar kucing dapat mengikuti lomba.", "C. Agar dokter menjadi pemiliknya.", "D. Agar kucing segera dijual."], "correctKeys": [0], "explanation": "Keluarga membawa kucing ke dokter untuk diperiksa setelah memastikan tidak ada pemilik yang mencari."}, {"type": "PGK-MCMA", "topic": "Karakter tokoh", "question": "Pilih DUA sikap baik yang ditunjukkan Nala.", "options": ["A. Peduli terhadap hewan.", "B. Mengabaikan kucing saat hujan.", "C. Meminta izin sebelum memberi makan.", "D. Mengusir kucing dari teras."], "correctKeys": [0, 2], "explanation": "Nala memperhatikan kebutuhan kucing dan meminta izin kepada ibunya."}, {"type": "BS", "topic": "Ketelitian membaca", "question": "Keluarga Nala langsung mengambil kucing tanpa memastikan apakah ada pemiliknya.", "options": ["Benar", "Salah"], "correctKeys": [1], "explanation": "Salah. Mereka terlebih dahulu memastikan tidak ada pemilik yang mencari kucing tersebut."}]}, {"packageId": "pkg-d", "stimulus": "<strong>Laporan Kualitas Sungai</strong><br>Tim pengamat lingkungan mencatat kondisi Sungai Jernih selama empat pekan. Pekan pertama ditemukan 18 kantong sampah, pekan kedua 14 kantong, pekan ketiga 9 kantong, dan pekan keempat 6 kantong. Tim menduga kegiatan kerja bakti dan penyediaan tempat sampah ikut membantu mengurangi sampah di tepi sungai. Mereka tetap mengingatkan warga agar tidak membuang limbah ke aliran air.", "questions": [{"type": "PG", "topic": "Membaca data", "question": "Berapa kantong sampah yang ditemukan pada pekan ketiga?", "options": ["A. 6 kantong.", "B. 9 kantong.", "C. 14 kantong.", "D. 18 kantong."], "correctKeys": [1], "explanation": "Data pekan ketiga pada teks adalah 9 kantong sampah."}, {"type": "PG", "topic": "Mengolah informasi", "question": "Berapa penurunan jumlah kantong sampah dari pekan pertama ke pekan keempat?", "options": ["A. 6 kantong.", "B. 9 kantong.", "C. 12 kantong.", "D. 18 kantong."], "correctKeys": [2], "explanation": "Penurunan = 18 − 6 = 12 kantong."}, {"type": "PG", "topic": "Menafsirkan pilihan kata", "question": "Mengapa tim menggunakan kata 'menduga' ketika menjelaskan penyebab penurunan sampah?", "options": ["A. Karena penyebab tersebut merupakan perkiraan berdasarkan pengamatan.", "B. Karena mereka tidak melakukan pengamatan.", "C. Karena jumlah sampah selalu bertambah.", "D. Karena sungai tidak pernah dibersihkan."], "correctKeys": [0], "explanation": "Kata 'menduga' menunjukkan kesimpulan sementara, bukan bukti sebab-akibat yang sudah dipastikan."}, {"type": "PGK-MCMA", "topic": "Mengidentifikasi tindakan", "question": "Pilih DUA tindakan yang disebut dapat membantu menjaga kebersihan sungai.", "options": ["A. Kerja bakti.", "B. Membuang limbah ke sungai.", "C. Menyediakan tempat sampah.", "D. Menutup seluruh aliran sungai."], "correctKeys": [0, 2], "explanation": "Teks menyebut kerja bakti dan penyediaan tempat sampah sebagai upaya yang diduga membantu."}, {"type": "BS", "topic": "Membaca tren", "question": "Jumlah sampah yang ditemukan cenderung menurun dari pekan pertama hingga pekan keempat.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Benar. Jumlahnya turun berurutan dari 18, 14, 9, menjadi 6 kantong."}]}, {"packageId": "pkg-d", "stimulus": "<strong>Penjaga Mercusuar</strong><br>Setiap malam, Pak Arman menyalakan lampu mercusuar di tepi teluk. Suatu malam kabut turun lebih tebal daripada biasanya. Ia memeriksa sumber listrik dan membersihkan kaca lampu agar sinarnya tidak terhalang. Menjelang tengah malam, sebuah kapal nelayan mengirim pesan bahwa cahaya mercusuar membantunya menemukan jalur menuju pelabuhan.", "questions": [{"type": "PG", "topic": "Memahami masalah", "question": "Apa tantangan yang dihadapi Pak Arman pada malam itu?", "options": ["A. Lampu mercusuar terlalu terang.", "B. Kabut turun sangat tebal.", "C. Kapal tidak memiliki awak.", "D. Pelabuhan dipindahkan."], "correctKeys": [1], "explanation": "Teks menyatakan kabut turun lebih tebal daripada biasanya."}, {"type": "PG", "topic": "Sebab-akibat", "question": "Tindakan Pak Arman membersihkan kaca lampu bertujuan untuk ...", "options": ["A. Mengurangi tinggi mercusuar.", "B. Membuat kapal berhenti.", "C. Memastikan sinar tidak terhalang.", "D. Menghemat air laut."], "correctKeys": [2], "explanation": "Kaca dibersihkan agar sinar lampu tidak terhalang."}, {"type": "PG", "topic": "Menyimpulkan manfaat", "question": "Pesan kapal nelayan menunjukkan bahwa pekerjaan Pak Arman ...", "options": ["A. Tidak memberi manfaat.", "B. Membantu keselamatan pelayaran.", "C. Mengganggu perjalanan kapal.", "D. Hanya dilakukan saat siang."], "correctKeys": [1], "explanation": "Kapal menyatakan cahaya mercusuar membantu menemukan jalur menuju pelabuhan."}, {"type": "PGK-MCMA", "topic": "Menemukan rincian", "question": "Pilih DUA hal yang dilakukan Pak Arman untuk mengatasi keadaan.", "options": ["A. Memeriksa sumber listrik.", "B. Mematikan lampu sepanjang malam.", "C. Membersihkan kaca lampu.", "D. Meninggalkan mercusuar."], "correctKeys": [0, 2], "explanation": "Kedua tindakan tersebut dinyatakan secara langsung dalam teks."}, {"type": "BS", "topic": "Menyimpulkan pesan", "question": "Cerita menunjukkan bahwa ketelitian Pak Arman berperan penting bagi pengguna laut.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Benar. Pemeriksaan dan pembersihan lampu membuat cahaya tetap membantu kapal."}]}, {"packageId": "pkg-e", "stimulus": "<strong>Energi Surya di Puskesmas</strong><br>Puskesmas Desa Harapan memasang panel surya di atap untuk membantu memenuhi kebutuhan listrik pada siang hari. Panel menangkap energi cahaya matahari dan mengubahnya menjadi energi listrik. Ketika produksi listrik lebih besar daripada pemakaian, sebagian energi disimpan dalam baterai. Petugas tetap menggunakan jaringan listrik utama ketika cuaca mendung berkepanjangan.", "questions": [{"type": "PG", "topic": "Memahami proses", "question": "Bagaimana panel surya menghasilkan listrik?", "options": ["A. Mengubah energi cahaya matahari menjadi energi listrik.", "B. Mengubah air hujan menjadi bahan bakar.", "C. Mengambil panas dari dalam tanah.", "D. Mengubah suara menjadi listrik."], "correctKeys": [0], "explanation": "Teks menjelaskan panel surya menangkap cahaya matahari lalu mengubahnya menjadi listrik."}, {"type": "PG", "topic": "Fungsi komponen", "question": "Apa fungsi baterai pada sistem tersebut?", "options": ["A. Menghalangi cahaya matahari.", "B. Menyimpan sebagian energi listrik.", "C. Menghasilkan air bersih.", "D. Mengurangi jumlah panel."], "correctKeys": [1], "explanation": "Sebagian energi disimpan dalam baterai ketika produksi lebih besar daripada pemakaian."}, {"type": "PG", "topic": "Inferensi", "question": "Mengapa puskesmas tetap menggunakan jaringan listrik utama saat mendung berkepanjangan?", "options": ["A. Panel surya tidak boleh terkena matahari.", "B. Produksi listrik dari matahari dapat berkurang.", "C. Baterai selalu penuh.", "D. Listrik utama lebih ramah lingkungan dalam semua keadaan."], "correctKeys": [1], "explanation": "Cuaca mendung berkepanjangan mengurangi ketersediaan cahaya, sehingga pasokan utama tetap diperlukan."}, {"type": "PGK-MCMA", "topic": "Mengevaluasi informasi", "question": "Pilih DUA pernyataan yang sesuai dengan teks.", "options": ["A. Panel dipasang di atap puskesmas.", "B. Panel mengubah energi listrik menjadi cahaya matahari.", "C. Energi berlebih dapat disimpan dalam baterai.", "D. Puskesmas tidak lagi membutuhkan jaringan listrik."], "correctKeys": [0, 2], "explanation": "A dan C sesuai dengan isi teks; B membalik proses dan D bertentangan dengan kalimat terakhir."}, {"type": "BS", "topic": "Menilai ketepatan pernyataan", "question": "Teks menyatakan bahwa panel surya selalu mencukupi kebutuhan listrik dalam segala cuaca.", "options": ["Benar", "Salah"], "correctKeys": [1], "explanation": "Salah. Saat mendung berkepanjangan, puskesmas masih menggunakan jaringan listrik utama."}]}, {"packageId": "pkg-e", "stimulus": "<strong>Surat dari Masa Depan</strong><br>Di dalam laci meja, Niko menemukan surat yang ditulisnya sendiri saat kelas tiga. Surat itu berisi janji untuk tetap rajin membaca dan berani mencoba hal baru. Niko tersenyum karena kini ia telah menyelesaikan beberapa buku tebal dan mengikuti klub robotik. Ia menempelkan surat lama itu di dekat meja belajar sebagai pengingat untuk terus berkembang.", "questions": [{"type": "PG", "topic": "Informasi tersurat", "question": "Apa isi utama surat lama yang ditemukan Niko?", "options": ["A. Janji untuk rajin membaca dan mencoba hal baru.", "B. Daftar belanja keluarga.", "C. Jadwal perjalanan sekolah.", "D. Permintaan membeli mainan."], "correctKeys": [0], "explanation": "Surat berisi janji Niko untuk rajin membaca dan berani mencoba hal baru."}, {"type": "PG", "topic": "Inferensi", "question": "Mengapa Niko tersenyum setelah membaca surat itu?", "options": ["A. Ia lupa pernah menulis surat.", "B. Ia melihat bahwa dirinya telah melakukan hal yang pernah dijanjikan.", "C. Ia ingin berhenti membaca.", "D. Ia kehilangan meja belajarnya."], "correctKeys": [1], "explanation": "Niko telah membaca beberapa buku dan mengikuti klub robotik, sesuai tekad dalam surat."}, {"type": "PG", "topic": "Memaknai tindakan", "question": "Tindakan menempelkan surat di dekat meja belajar menunjukkan bahwa Niko ...", "options": ["A. Ingin membuang kenangan.", "B. Menjadikan surat sebagai pengingat dan motivasi.", "C. Takut menggunakan meja.", "D. Tidak menyukai robotik."], "correctKeys": [1], "explanation": "Surat ditempel sebagai pengingat untuk terus berkembang."}, {"type": "PGK-MCMA", "topic": "Menemukan informasi", "question": "Pilih DUA perkembangan yang telah dicapai Niko.", "options": ["A. Menyelesaikan beberapa buku tebal.", "B. Menjadi guru robotik.", "C. Mengikuti klub robotik.", "D. Pindah ke sekolah lain."], "correctKeys": [0, 2], "explanation": "Kedua hal tersebut disebutkan secara langsung sebagai perkembangan Niko."}, {"type": "BS", "topic": "Amanat", "question": "Amanat cerita adalah janji baik kepada diri sendiri dapat menjadi dorongan untuk berkembang.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Benar. Surat lama mengingatkan Niko pada tekad yang terus ia jalankan."}]}];
+
+      readingGroups.forEach(group => {
+        group.questions.forEach(item => {
+          questions.push({
+            id: globalId++,
+            packageId: group.packageId,
+            subject: 'Bahasa Indonesia',
+            type: item.type,
+            topic: item.topic,
+            stimulus: group.stimulus,
+            question: item.question,
+            options: item.options,
+            correctKeys: item.correctKeys,
+            explanation: item.explanation
+          });
+        });
+      });
+
+      const mathematicsQuestions = {"pkg-a": [{"type": "PG", "topic": "Operasi hitung", "question": "Perpustakaan membeli 6 pak buku tulis. Setiap pak berisi 12 buku. Sebanyak 17 buku dipinjam siswa. Berapa buku yang masih tersedia?", "options": ["45", "55", "62", "72"], "correctKeys": [1], "explanation": "Jumlah buku = 6 × 12 = 72. Buku tersisa = 72 − 17 = 55."}, {"type": "PG", "topic": "Pecahan", "question": "Kue dipotong menjadi 8 bagian sama besar. Raka memakan 3 bagian. Berapa bagian kue yang belum dimakan?", "options": ["3/8", "5/8", "5/3", "8/5"], "correctKeys": [1], "explanation": "Bagian tersisa = 8/8 − 3/8 = 5/8."}, {"type": "PG", "topic": "Uang", "question": "Dina membeli 2 pensil seharga Rp2.500 per buah dan sebuah penghapus Rp1.500. Ia membayar Rp10.000. Berapa kembaliannya?", "options": ["Rp2.500", "Rp3.000", "Rp3.500", "Rp4.000"], "correctKeys": [2], "explanation": "Total belanja = 2 × Rp2.500 + Rp1.500 = Rp6.500. Kembalian = Rp10.000 − Rp6.500 = Rp3.500."}, {"type": "PG", "topic": "Waktu", "question": "Pelajaran dimulai pukul 07.15 dan berlangsung selama 1 jam 35 menit. Pukul berapa pelajaran berakhir?", "options": ["08.40", "08.45", "08.50", "09.00"], "correctKeys": [2], "explanation": "07.15 + 1 jam = 08.15; ditambah 35 menit menjadi 08.50."}, {"type": "PG", "topic": "Keliling", "question": "Sebuah persegi memiliki panjang sisi 9 cm. Keliling persegi tersebut adalah ...", "options": ["18 cm", "27 cm", "36 cm", "81 cm"], "correctKeys": [2], "explanation": "Keliling persegi = 4 × sisi = 4 × 9 = 36 cm."}, {"type": "PG", "topic": "Luas", "question": "Kebun berbentuk persegi panjang memiliki panjang 12 m dan lebar 5 m. Berapa luasnya?", "options": ["17 m²", "34 m²", "60 m²", "120 m²"], "correctKeys": [2], "explanation": "Luas = panjang × lebar = 12 × 5 = 60 m²."}, {"type": "PG", "topic": "Volume", "question": "Kotak berbentuk balok berukuran 8 cm × 5 cm × 4 cm. Volumenya adalah ...", "options": ["17 cm³", "40 cm³", "160 cm³", "320 cm³"], "correctKeys": [2], "explanation": "Volume balok = 8 × 5 × 4 = 160 cm³."}, {"type": "PGK-MCMA", "topic": "Satuan panjang", "question": "Pilih DUA pernyataan yang benar.", "options": ["2 m = 200 cm.", "3 km = 300 m.", "450 cm = 4,5 m.", "1 m = 10 cm."], "correctKeys": [0, 2], "explanation": "2 m = 200 cm dan 450 cm = 4,5 m. Sementara 3 km = 3.000 m dan 1 m = 100 cm."}, {"type": "PG", "topic": "Rata-rata", "question": "Nilai latihan Rina adalah 70, 80, dan 90. Berapa rata-ratanya?", "options": ["75", "80", "85", "90"], "correctKeys": [1], "explanation": "Rata-rata = (70 + 80 + 90) ÷ 3 = 240 ÷ 3 = 80."}, {"type": "BS", "topic": "KPK", "question": "Lampu A berkedip setiap 4 detik dan lampu B setiap 6 detik. Keduanya akan berkedip bersama lagi setiap 12 detik.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Benar. KPK dari 4 dan 6 adalah 12."}], "pkg-b": [{"type": "PG", "topic": "Perbandingan", "question": "Perbandingan siswa laki-laki dan perempuan dalam klub adalah 3 : 4. Jika siswa laki-laki 12 orang, berapa siswa perempuan?", "options": ["9", "16", "18", "21"], "correctKeys": [1], "explanation": "Tiga bagian = 12, sehingga satu bagian = 4. Jumlah perempuan = 4 × 4 = 16."}, {"type": "PG", "topic": "Persen", "question": "Di kelas terdapat 40 siswa. Sebanyak 25% mengikuti klub sains. Berapa siswa yang mengikuti klub sains?", "options": ["5", "10", "15", "20"], "correctKeys": [1], "explanation": "25% × 40 = 25/100 × 40 = 10 siswa."}, {"type": "PG", "topic": "Desimal", "question": "Hasil dari 2,5 + 1,75 adalah ...", "options": ["3,25", "4,15", "4,25", "4,75"], "correctKeys": [2], "explanation": "Susun koma sejajar: 2,50 + 1,75 = 4,25."}, {"type": "PG", "topic": "Konversi berat", "question": "Sebuah karung berisi 3 kg 500 gram beras. Berat tersebut sama dengan ...", "options": ["350 gram", "3.050 gram", "3.500 gram", "35.000 gram"], "correctKeys": [2], "explanation": "1 kg = 1.000 gram, jadi 3 kg 500 gram = 3.500 gram."}, {"type": "PG", "topic": "Luas segitiga", "question": "Segitiga memiliki alas 14 cm dan tinggi 8 cm. Berapa luasnya?", "options": ["22 cm²", "56 cm²", "112 cm²", "224 cm²"], "correctKeys": [1], "explanation": "Luas segitiga = ½ × alas × tinggi = ½ × 14 × 8 = 56 cm²."}, {"type": "PG", "topic": "FPB", "question": "Bu Guru memiliki 24 pensil dan 36 penghapus. Keduanya dibagikan ke paket dengan jumlah setiap jenis sama banyak tanpa sisa. Paket terbanyak adalah ...", "options": ["6", "8", "12", "18"], "correctKeys": [2], "explanation": "FPB dari 24 dan 36 adalah 12, sehingga dapat dibuat paling banyak 12 paket."}, {"type": "PG", "topic": "Kecepatan", "question": "Bus menempuh jarak 120 km dalam 3 jam dengan kecepatan tetap. Kecepatannya adalah ...", "options": ["30 km/jam", "40 km/jam", "60 km/jam", "90 km/jam"], "correctKeys": [1], "explanation": "Kecepatan = jarak ÷ waktu = 120 ÷ 3 = 40 km/jam."}, {"type": "PGK-MCMA", "topic": "Sifat bangun", "question": "Pilih DUA pernyataan yang benar tentang persegi panjang.", "options": ["Memiliki dua pasang sisi berhadapan sama panjang.", "Keempat sisinya selalu sama panjang.", "Memiliki empat sudut siku-siku.", "Tidak memiliki diagonal."], "correctKeys": [0, 2], "explanation": "Persegi panjang mempunyai dua pasang sisi berhadapan sama panjang dan empat sudut siku-siku."}, {"type": "PG", "topic": "Rata-rata", "question": "Empat kelompok mengumpulkan 12, 15, 9, dan 16 botol bekas. Rata-rata per kelompok adalah ...", "options": ["12", "13", "14", "15"], "correctKeys": [1], "explanation": "Jumlah = 52. Rata-rata = 52 ÷ 4 = 13."}, {"type": "BS", "topic": "KPK jadwal", "question": "Bus A datang setiap 10 menit dan bus B setiap 15 menit. Jika keduanya datang bersama pukul 07.00, keduanya akan datang bersama lagi pukul 07.30.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "KPK 10 dan 15 adalah 30 menit. Jadi, keduanya bertemu lagi pukul 07.30."}], "pkg-c": [{"type": "PG", "topic": "Pecahan", "question": "Hasil dari 3/4 + 1/8 adalah ...", "options": ["4/12", "5/8", "7/8", "1 1/8"], "correctKeys": [2], "explanation": "Samakan penyebut: 3/4 = 6/8. Maka 6/8 + 1/8 = 7/8."}, {"type": "PG", "topic": "Persentase", "question": "Harga tas Rp80.000 mendapat potongan 15%. Besar potongan harga adalah ...", "options": ["Rp8.000", "Rp10.000", "Rp12.000", "Rp15.000"], "correctKeys": [2], "explanation": "Potongan = 15/100 × Rp80.000 = Rp12.000."}, {"type": "PG", "topic": "Skala", "question": "Pada peta berskala 1 : 200.000, jarak dua desa adalah 4 cm. Jarak sebenarnya adalah ...", "options": ["800 m", "2 km", "8 km", "80 km"], "correctKeys": [2], "explanation": "Jarak sebenarnya = 4 × 200.000 cm = 800.000 cm = 8 km."}, {"type": "PG", "topic": "Median", "question": "Data jumlah buku yang dibaca lima siswa adalah 3, 5, 4, 7, dan 6. Median data tersebut adalah ...", "options": ["4", "5", "6", "7"], "correctKeys": [1], "explanation": "Urutkan data: 3, 4, 5, 6, 7. Nilai tengahnya adalah 5."}, {"type": "PG", "topic": "Sudut", "question": "Sudut 125° termasuk jenis sudut ...", "options": ["Lancip", "Siku-siku", "Tumpul", "Lurus"], "correctKeys": [2], "explanation": "Sudut tumpul lebih dari 90° dan kurang dari 180°. Jadi 125° adalah sudut tumpul."}, {"type": "PG", "topic": "Volume kubus", "question": "Kubus memiliki panjang rusuk 6 cm. Volumenya adalah ...", "options": ["36 cm³", "108 cm³", "216 cm³", "256 cm³"], "correctKeys": [2], "explanation": "Volume kubus = 6 × 6 × 6 = 216 cm³."}, {"type": "PG", "topic": "Perbandingan senilai", "question": "Untuk membuat 4 gelas jus diperlukan 8 jeruk. Jika ingin membuat 10 gelas dengan rasa sama, jeruk yang diperlukan adalah ...", "options": ["12", "16", "20", "24"], "correctKeys": [2], "explanation": "Setiap gelas membutuhkan 2 jeruk. Untuk 10 gelas diperlukan 10 × 2 = 20 jeruk."}, {"type": "PGK-MCMA", "topic": "Pecahan dan persen", "question": "Pilih DUA bentuk yang nilainya sama dengan 1/2.", "options": ["0,5", "25%", "50%", "2/3"], "correctKeys": [0, 2], "explanation": "1/2 = 0,5 = 50%."}, {"type": "PG", "topic": "Kecepatan", "question": "Alya bersepeda 15 km dalam 1 jam. Jika kecepatannya tetap, jarak dalam 2 jam adalah ...", "options": ["17 km", "25 km", "30 km", "35 km"], "correctKeys": [2], "explanation": "Jarak = kecepatan × waktu = 15 × 2 = 30 km."}, {"type": "BS", "topic": "Data", "question": "Diagram batang menunjukkan penjualan Senin 12 buku dan Selasa 18 buku. Penjualan Selasa 6 buku lebih banyak daripada Senin.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Benar. Selisih = 18 − 12 = 6 buku."}], "pkg-d": [{"type": "PG", "topic": "Operasi campuran", "question": "Hasil dari 240 ÷ 6 + 18 × 3 adalah ...", "options": ["42", "94", "102", "174"], "correctKeys": [1], "explanation": "Kerjakan pembagian dan perkalian lebih dahulu: 240 ÷ 6 = 40 dan 18 × 3 = 54. Jumlahnya 40 + 54 = 94."}, {"type": "PG", "topic": "Diskon", "question": "Jaket berharga Rp160.000 mendapat diskon 20%. Harga setelah diskon adalah ...", "options": ["Rp120.000", "Rp128.000", "Rp132.000", "Rp140.000"], "correctKeys": [1], "explanation": "Diskon = 20% × Rp160.000 = Rp32.000. Harga akhir = Rp160.000 − Rp32.000 = Rp128.000."}, {"type": "PG", "topic": "Skala denah", "question": "Panjang ruang kelas pada denah 7 cm dengan skala 1 : 100. Panjang sebenarnya adalah ...", "options": ["0,7 m", "7 m", "70 m", "700 m"], "correctKeys": [1], "explanation": "Panjang sebenarnya = 7 × 100 cm = 700 cm = 7 m."}, {"type": "PG", "topic": "Rata-rata", "question": "Rata-rata nilai 5 siswa adalah 80. Empat nilai diketahui 75, 80, 85, dan 90. Nilai siswa kelima adalah ...", "options": ["65", "70", "75", "80"], "correctKeys": [1], "explanation": "Total nilai = 5 × 80 = 400. Jumlah empat nilai = 330. Nilai kelima = 400 − 330 = 70."}, {"type": "PG", "topic": "Keliling lingkaran", "question": "Lingkaran memiliki diameter 14 cm. Dengan π = 22/7, kelilingnya adalah ...", "options": ["22 cm", "44 cm", "88 cm", "154 cm"], "correctKeys": [1], "explanation": "Keliling = π × diameter = 22/7 × 14 = 44 cm."}, {"type": "PG", "topic": "FPB", "question": "Pita 84 cm dan 126 cm dipotong menjadi bagian sama panjang terpanjang tanpa sisa. Panjang tiap potongan adalah ...", "options": ["21 cm", "28 cm", "42 cm", "63 cm"], "correctKeys": [2], "explanation": "Panjang potongan terpanjang adalah FPB(84,126) = 42 cm."}, {"type": "PG", "topic": "Debit", "question": "Keran mengalirkan 24 liter air dalam 3 menit. Debit air tersebut adalah ...", "options": ["6 liter/menit", "8 liter/menit", "12 liter/menit", "72 liter/menit"], "correctKeys": [1], "explanation": "Debit = volume ÷ waktu = 24 ÷ 3 = 8 liter per menit."}, {"type": "PGK-MCMA", "topic": "Koordinat", "question": "Titik A berada di koordinat (2,3). Pilih DUA pernyataan yang benar.", "options": ["Titik A berjarak 2 satuan ke kanan dari titik asal.", "Titik A berjarak 3 satuan ke bawah dari titik asal.", "Koordinat mendatar titik A adalah 2.", "Koordinat tegak titik A adalah 2."], "correctKeys": [0, 2], "explanation": "Koordinat (2,3) berarti 2 pada sumbu mendatar (x) dan 3 pada sumbu tegak (y)."}, {"type": "PG", "topic": "Peluang", "question": "Dalam kotak terdapat 3 bola merah, 2 biru, dan 5 kuning. Jika diambil satu bola, warna yang paling mungkin terambil adalah ...", "options": ["Merah", "Biru", "Kuning", "Semua sama mungkin"], "correctKeys": [2], "explanation": "Bola kuning berjumlah paling banyak, yaitu 5 dari total 10 bola."}, {"type": "BS", "topic": "Sudut segitiga", "question": "Jumlah besar ketiga sudut dalam setiap segitiga adalah 180°.", "options": ["Benar", "Salah"], "correctKeys": [0], "explanation": "Benar. Jumlah sudut dalam segitiga selalu 180°."}], "pkg-e": [{"type": "PG", "topic": "Perbandingan", "question": "Perbandingan tepung dan gula dalam resep adalah 5 : 2. Jika tepung 750 gram, gula yang diperlukan adalah ...", "options": ["150 gram", "250 gram", "300 gram", "375 gram"], "correctKeys": [2], "explanation": "Lima bagian = 750 gram, jadi satu bagian = 150 gram. Gula = 2 bagian = 300 gram."}, {"type": "PG", "topic": "Persentase kenaikan", "question": "Pengunjung perpustakaan naik dari 80 menjadi 100 orang. Persentase kenaikannya adalah ...", "options": ["20%", "25%", "30%", "125%"], "correctKeys": [1], "explanation": "Kenaikan = 20 orang. Persentase kenaikan = 20/80 × 100% = 25%."}, {"type": "PG", "topic": "Pecahan", "question": "Tangki berisi 3/4 bagian air. Kemudian digunakan air sebanyak 1/3 kapasitas tangki. Bagian kapasitas yang masih berisi air adalah ...", "options": ["1/4", "5/12", "1/2", "7/12"], "correctKeys": [1], "explanation": "Sisa = 3/4 − 1/3 = 9/12 − 4/12 = 5/12."}, {"type": "PG", "topic": "Volume", "question": "Akuarium berukuran 50 cm × 30 cm × 40 cm terisi air sebanyak setengah kapasitas. Volume airnya adalah ...", "options": ["15.000 cm³", "30.000 cm³", "45.000 cm³", "60.000 cm³"], "correctKeys": [1], "explanation": "Kapasitas = 50 × 30 × 40 = 60.000 cm³. Setengahnya = 30.000 cm³."}, {"type": "PG", "topic": "Kecepatan rata-rata", "question": "Mobil menempuh 90 km dalam 1,5 jam. Kecepatannya adalah ...", "options": ["45 km/jam", "50 km/jam", "60 km/jam", "75 km/jam"], "correctKeys": [2], "explanation": "Kecepatan rata-rata = 90 ÷ 1,5 = 60 km/jam."}, {"type": "PG", "topic": "Modus", "question": "Data 4, 5, 5, 6, 7, 5, 8 memiliki modus ...", "options": ["4", "5", "6", "7"], "correctKeys": [1], "explanation": "Modus adalah nilai yang paling sering muncul. Angka 5 muncul tiga kali."}, {"type": "PG", "topic": "Bilangan bulat", "question": "Suhu kota A pada pagi hari 3°C. Pada malam hari suhunya turun 8°C. Suhu malam hari adalah ...", "options": ["−11°C", "−5°C", "5°C", "11°C"], "correctKeys": [1], "explanation": "Suhu akhir = 3 − 8 = −5°C."}, {"type": "PGK-MCMA", "topic": "Bangun ruang", "question": "Pilih DUA ciri kubus.", "options": ["Memiliki 6 sisi berbentuk persegi.", "Memiliki 8 titik sudut.", "Memiliki 2 sisi berbentuk lingkaran.", "Memiliki 12 titik sudut."], "correctKeys": [0, 1], "explanation": "Kubus memiliki 6 sisi persegi, 12 rusuk, dan 8 titik sudut."}, {"type": "PG", "topic": "Aritmetika sosial", "question": "Pedagang membeli 20 botol minuman seharga Rp4.000 per botol. Semua dijual Rp5.000 per botol. Keuntungan seluruhnya adalah ...", "options": ["Rp10.000", "Rp15.000", "Rp20.000", "Rp25.000"], "correctKeys": [2], "explanation": "Keuntungan per botol = Rp1.000. Untuk 20 botol, keuntungan = 20 × Rp1.000 = Rp20.000."}, {"type": "BS", "topic": "Peluang", "question": "Dalam kantong terdapat 4 kelereng putih dan 4 hitam. Peluang mengambil kelereng putih lebih besar daripada peluang mengambil kelereng hitam.", "options": ["Benar", "Salah"], "correctKeys": [1], "explanation": "Salah. Jumlah kedua warna sama, sehingga peluangnya sama besar, yaitu 4/8."}]};
+      Object.entries(mathematicsQuestions).forEach(([packageId, items]) => {
+        items.forEach(item => {
+          questions.push({
+            id: globalId++,
+            packageId,
+            subject: 'Matematika',
+            type: item.type,
+            topic: item.topic,
+            stimulus: '',
+            question: item.question,
+            options: item.options,
+            correctKeys: item.correctKeys,
+            explanation: item.explanation
+          });
+        });
+      });
+
+      const ordered = [];
+      ['pkg-a','pkg-b','pkg-c','pkg-d','pkg-e'].forEach(packageId => {
+        ordered.push(...questions.filter(q => q.packageId === packageId && q.subject === 'Bahasa Indonesia'));
+        ordered.push(...questions.filter(q => q.packageId === packageId && q.subject === 'Matematika'));
+      });
+      ordered.forEach((q, index) => q.id = index + 1);
+      return ordered;
+    }
+
+    const questionBank = generateQuestionBank();
+
+    // ==========================================
+    // STATE APLIKASI
+    // ==========================================
+    let currentUser = {
+      name: getStoredData('tka_student_name', 'Pejuang TKA'),
+      xp: parseInt(getStoredData('tka_student_xp', 120)),
+      badge: 'Pejuang TKA'
+    };
+
+    let currentView = 'home';
+    let selectedPackage = null;
+    let currentQuizMode = 'practice';
+    let timerDurationMinutes = 30;
+    
+    // State Saat Mengerjakan Ujian
+    let activeQuiz = {
+      packageId: null,
+      packageName: '',
+      questions: [],
+      currentIndex: 0,
+      userAnswers: {},
+      flagged: {},
+      timeRemaining: 0,
+      timerInterval: null,
+      isFinished: false,
+      startTime: null,
+      endTime: null
+    };
+
+    // Data Riwayat Ujian dari LocalStorage
+    let quizHistory = getStoredData('tka_quiz_history', [
+      {
+        id: 'hist-1',
+        studentName: 'Ahmad Raihan',
+        packageName: 'Paket A — Misi Pemula',
+        date: '2026-10-28',
+        score: 85,
+        scoreIndo: 90,
+        scoreMath: 80,
+        timeSpent: '24 min',
+        mode: 'Simulasi'
+      },
+      {
+        id: 'hist-2',
+        studentName: 'Siti Fatima',
+        packageName: 'Paket B — Misi Penjelajah',
+        date: '2026-11-01',
+        score: 95,
+        scoreIndo: 100,
+        scoreMath: 90,
+        timeSpent: '28 min',
+        mode: 'Simulasi'
+      }
+    ]);
+
+    // ==========================================
+    // INISIALISASI & ROUTING
+    // ==========================================
+    window.onload = function() {
+      updateStudentNav();
+      navigateTo('home');
+    };
+
+    function updateStudentNav() {
+      document.getElementById('navStudentName').innerText = currentUser.name;
+      const initials = currentUser.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() || 'ST';
+      document.getElementById('navAvatarInitials').innerText = initials;
+    }
+
+    function toggleMobileNav() {
+      const menu = document.getElementById('mobileNavMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    function openNameModal() {
+      document.getElementById('studentNameInput').value = currentUser.name;
+      document.getElementById('nameModal').classList.remove('hidden');
+    }
+
+    function closeNameModal() {
+      document.getElementById('nameModal').classList.add('hidden');
+    }
+
+    function saveStudentName(e) {
+      e.preventDefault();
+      const val = document.getElementById('studentNameInput').value.trim();
+      if(val) {
+        currentUser.name = val;
+        setStoredData('tka_student_name', val);
+        updateStudentNav();
+        closeNameModal();
+        if(currentView === 'home') renderHome();
+      }
+    }
+
+    function navigateTo(view) {
+      currentView = view;
+      const main = document.getElementById('mainContainer');
+      main.innerHTML = '';
+
+      // Clear timer jika pindah halaman
+      if(activeQuiz.timerInterval && view !== 'quiz') {
+        clearInterval(activeQuiz.timerInterval);
+        activeQuiz.timerInterval = null;
+      }
+
+      switch(view) {
+        case 'home':
+          renderHome();
+          break;
+        case 'subjects':
+          renderSubjects();
+          break;
+        case 'materials':
+          renderMaterials();
+          break;
+        case 'quiz':
+          renderQuiz();
+          break;
+        case 'result':
+          renderResult();
+          break;
+        case 'review':
+          renderReview();
+          break;
+        case 'teacher':
+          renderTeacherDashboard();
+          break;
+        case 'about':
+          renderAbout();
+          break;
+        default:
+          renderHome();
+      }
+      window.scrollTo(0, 0);
+      renderMathTypesetting();
+    }
+
+    // ==========================================
+    // 1. HALAMAN BERANDA
+    // ==========================================
+    function renderHome() {
+      const main = document.getElementById('mainContainer');
+      const completedCount = quizHistory.filter(h => h.studentName === currentUser.name).length;
+
+      main.innerHTML = `
+        <!-- HERO SECTION -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-purple via-indigo-600 to-brand-navy text-white p-6 sm:p-10 mb-8 soft-shadow">
+          <div class="relative z-10 max-w-2xl">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-brand-peach text-xs font-bold mb-4 border border-white/10">
+              <i class="fa-solid fa-star"></i> Media Pembelajaran Digital Bu Nadzif
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-3">
+              Halo, <span class="text-brand-peach">${currentUser.name}!</span><br>Siap Menaklukkan TKA?
+            </h2>
+            <p class="text-xs sm:text-base text-purple-100 font-medium mb-6 leading-relaxed">
+              Persiapkan dirimu, tingkatkan kemampuan, dan raih hasil terbaik melalui latihan soal dan simulasi yang interaktif & menyenangkan.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <button onclick="scrollToPackages()" class="bg-brand-peach hover:bg-amber-400 text-brand-navy font-extrabold px-6 py-3.5 rounded-2xl shadow-lg transition transform hover:-translate-y-0.5 flex items-center gap-2 text-xs sm:text-base">
+                <i class="fa-solid fa-rocket"></i> MULAI BERLATIH SEKARANG
+              </button>
+              <button onclick="navigateTo('materials')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold px-5 py-3.5 rounded-2xl transition text-xs sm:text-base">
+                <i class="fa-solid fa-book-open-reader"></i> Pelajari Materi
+              </button>
+            </div>
+          </div>
+
+          <!-- Decorative Graphic -->
+          <div class="absolute right-[-20px] bottom-[-20px] opacity-20 lg:opacity-40 pointer-events-none">
+            <i class="fa-solid fa-user-graduate text-[240px]"></i>
+          </div>
+        </div>
+
+        <!-- AKSES MATERI BELAJAR -->
+        <div class="bg-white rounded-2xl border border-brand-purple/10 soft-shadow p-4 sm:p-5 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-brand-purpleLight text-brand-purple flex items-center justify-center text-xl">
+              <i class="fa-solid fa-book-open-reader"></i>
+            </div>
+            <div>
+              <h3 class="font-extrabold text-brand-navy">Belajar Materi Sebelum Berlatih</h3>
+              <p class="text-xs text-gray-500">Pelajari konsep, contoh, dan strategi menjawab soal TKA.</p>
+            </div>
+          </div>
+          <button onclick="navigateTo('materials')" class="w-full sm:w-auto bg-brand-purple text-white font-extrabold px-5 py-3 rounded-xl text-xs sm:text-sm hover:opacity-90 transition">
+            Buka Materi Belajar <i class="fa-solid fa-arrow-right ml-1"></i>
+          </button>
+        </div>
+
+        <!-- STATISTIK RINGKASAN -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-brand-purpleLight text-brand-purple flex items-center justify-center text-xl font-bold">
+              <i class="fa-solid fa-box-archive"></i>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-brand-navy">5 Paket</div>
+              <div class="text-xs font-semibold text-gray-500">Paket Latihan Misi</div>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-brand-mintLight text-emerald-600 flex items-center justify-center text-xl font-bold">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-brand-navy">100 Soal</div>
+              <div class="text-xs font-semibold text-gray-500">Soal Standar TKA</div>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-brand-peachLight text-amber-600 flex items-center justify-center text-xl font-bold">
+              <i class="fa-solid fa-book"></i>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-brand-navy">2 Mapel</div>
+              <div class="text-xs font-semibold text-gray-500">B. Indo & Matematika</div>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl font-bold">
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <div>
+              <div class="text-2xl font-black text-brand-navy">${completedCount} Selesai</div>
+              <div class="text-xs font-semibold text-gray-500">Riwayat Pengerjaan</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PILIHAN PAKET LATIHAN -->
+        <div id="packagesSection" class="mb-10">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 gap-2">
+            <div>
+              <span class="text-xs font-extrabold uppercase tracking-widest text-brand-purple">Misi Pembelajaran</span>
+              <h3 class="text-2xl font-black text-brand-navy">Pilih Paket Latihan TKA</h3>
+            </div>
+            <p class="text-xs text-gray-500 font-semibold">Tingkatkan tantangan secara bertahap dari Paket A hingga E</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            ${packagesData.map(pkg => renderPackageCard(pkg)).join('')}
+          </div>
+        </div>
+
+        <!-- MOTIVASI & TIPS -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <div class="lg:col-span-2 bg-gradient-to-br from-brand-mintLight to-white p-6 rounded-3xl border border-brand-mint/40 soft-shadow flex items-start gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-brand-mint text-brand-navy flex items-center justify-center text-2xl shrink-0 font-bold">
+              <i class="fa-solid fa-quote-left"></i>
+            </div>
+            <div>
+              <h4 class="font-extrabold text-brand-navy text-lg mb-1">Pesan Cinta dari Bu Nadzif ❤️</h4>
+              <p class="text-xs sm:text-sm text-gray-700 italic leading-relaxed mb-3">
+                "Hasil tidak akan pernah mengkhianati usaha. Jangan takut salah dalam berlatih, karena dari kesalahan dan pembahasannya kita belajar menjadi lebih matang dan cerdas."
+              </p>
+              <span class="text-xs font-bold text-brand-purple uppercase tracking-wider">— Bu Nadzif, Penggagas Ruang Berlatih TKA</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-3xl border border-brand-purple/10 soft-shadow">
+            <h4 class="font-extrabold text-brand-navy text-base mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-lightbulb text-brand-peach"></i> Tips Sukses TKA
+            </h4>
+            <ul class="text-xs text-gray-600 space-y-2 font-medium">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i> Baca teks stimulus dengan teliti sebelum menjawab.</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i> Perhatikan tipe soal (PG, Multiple Choice, atau Benar/Salah).</li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-emerald-500 mt-0.5"></i> Manfaatkan Fitur Pembahasan untuk evaluasi.</li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPackageCard(pkg) {
+      return `
+        <div class="bg-white rounded-3xl border border-brand-purple/10 soft-shadow overflow-hidden flex flex-col justify-between transform hover:-translate-y-1 transition duration-200">
+          <div>
+            <div class="bg-gradient-to-r ${pkg.color} p-5 text-white flex justify-between items-center">
+              <div>
+                <span class="text-[10px] font-black uppercase tracking-widest bg-white/20 px-2 py-0.5 rounded-full">${pkg.badge}</span>
+                <h4 class="text-xl font-extrabold mt-1">${pkg.name}</h4>
+              </div>
+              <span class="text-2xl font-black opacity-30">${pkg.code}</span>
+            </div>
+
+            <div class="p-5">
+              <p class="text-xs text-gray-500 font-medium mb-4 min-h-[36px]">${pkg.tagline}</p>
+              
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-xs">
+                  <span class="text-gray-500 font-semibold"><i class="fa-solid fa-clipboard-question text-brand-purple mr-1.5"></i>Jumlah Soal:</span>
+                  <span class="font-extrabold text-brand-navy">${pkg.questionsCount} Soal</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-gray-500 font-semibold"><i class="fa-solid fa-layer-group text-brand-purple mr-1.5"></i>Tingkat Kesulitan:</span>
+                  <span class="font-extrabold text-brand-navy">${pkg.level}</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                  <span class="text-gray-500 font-semibold"><i class="fa-solid fa-book text-brand-purple mr-1.5"></i>Cakupan:</span>
+                  <span class="font-bold text-gray-700">Indo & Math</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-5 pt-0">
+            <button onclick="openStartModal('${pkg.id}')" class="w-full ${pkg.btnColor} hover:opacity-90 text-white font-extrabold py-3 rounded-2xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-md">
+              <span>Mulai Paket</span>
+              <i class="fa-solid fa-circle-play"></i>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function scrollToPackages() {
+      const el = document.getElementById('packagesSection');
+      if(el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function openStartModal(pkgId) {
+      selectedPackage = packagesData.find(p => p.id === pkgId);
+      if(!selectedPackage) return;
+
+      document.getElementById('modalPkgBadge').innerText = selectedPackage.code;
+      document.getElementById('modalPkgTitle').innerText = selectedPackage.name;
+      document.getElementById('modalPkgDesc').innerText = selectedPackage.tagline;
+
+      document.getElementById('startModal').classList.remove('hidden');
+    }
+
+    function closeStartModal() {
+      document.getElementById('startModal').classList.add('hidden');
+    }
+
+    function toggleTimerOption(showTimer) {
+      const timerBox = document.getElementById('timerSelectContainer');
+      if(showTimer) {
+        timerBox.classList.remove('hidden');
+        currentQuizMode = 'simulation';
+      } else {
+        timerBox.classList.add('hidden');
+        currentQuizMode = 'practice';
+      }
+    }
+
+    function setSimDuration(mins) {
+      timerDurationMinutes = mins;
+      const btns = document.querySelectorAll('.timer-btn');
+      btns.forEach(btn => {
+        if(btn.innerText.includes(mins)) {
+          btn.className = "timer-btn border-2 border-brand-purple bg-white text-brand-purple font-bold py-2 rounded-xl text-xs sm:text-sm transition";
+        } else {
+          btn.className = "timer-btn border-2 border-transparent bg-white text-gray-600 font-bold py-2 rounded-xl text-xs sm:text-sm transition";
+        }
+      });
+    }
+
+    function confirmStartQuiz() {
+      closeStartModal();
+      
+      const pkgQuestions = questionBank.filter(q => q.packageId === selectedPackage.id);
+
+      activeQuiz = {
+        packageId: selectedPackage.id,
+        packageName: `${selectedPackage.code} — ${selectedPackage.name}`,
+        questions: pkgQuestions,
+        currentIndex: 0,
+        userAnswers: {},
+        flagged: {},
+        timeRemaining: currentQuizMode === 'simulation' ? timerDurationMinutes * 60 : 0,
+        timerInterval: null,
+        isFinished: false,
+        startTime: new Date(),
+        endTime: null
+      };
+
+      navigateTo('quiz');
+    }
+
+    function repeatQuiz() {
+      if(!activeQuiz || !activeQuiz.packageId) {
+        navigateTo('home');
+        return;
+      }
+      const pkgQuestions = questionBank.filter(q => q.packageId === activeQuiz.packageId);
+      activeQuiz.questions = pkgQuestions;
+      activeQuiz.currentIndex = 0;
+      activeQuiz.userAnswers = {};
+      activeQuiz.flagged = {};
+      activeQuiz.timeRemaining = currentQuizMode === 'simulation' ? timerDurationMinutes * 60 : 0;
+      activeQuiz.isFinished = false;
+      activeQuiz.startTime = new Date();
+      
+      navigateTo('quiz');
+    }
+
+    // ==========================================
+    // 2. MATA PELAJARAN
+    // ==========================================
+    function renderSubjects() {
+      const main = document.getElementById('mainContainer');
+      main.innerHTML = `
+        <div class="mb-8 text-center max-w-2xl mx-auto">
+          <span class="text-xs font-extrabold uppercase tracking-widest text-brand-purple">Struktur Kurikulum TKA</span>
+          <h2 class="text-3xl font-black text-brand-navy mb-2">Pemetaan Mata Pelajaran</h2>
+          <p class="text-xs sm:text-sm text-gray-600">Pelajari ruang lingkup kompetensi yang diuji dalam Tes Kemampuan Akademik Kelas VI MI.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div class="bg-white rounded-3xl border border-brand-purple/10 soft-shadow p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-purple-100 text-brand-purple flex items-center justify-center text-3xl font-bold mb-6">
+                <i class="fa-solid fa-book-bookmark"></i>
+              </div>
+              <h3 class="text-2xl font-black text-brand-navy mb-3">Bahasa Indonesia</h3>
+              <p class="text-xs text-gray-500 font-medium leading-relaxed mb-6">
+                Mengukur kemampuan literasi membaca, memahami informasi eksplisit dan implisit, serta mengevaluasi karya fiksi & informasi.
+              </p>
+              
+              <h4 class="font-extrabold text-xs sm:text-sm text-brand-navy uppercase tracking-wider mb-3">Kompetensi Utama:</h4>
+              <ul class="space-y-2.5 text-xs text-gray-700 font-semibold mb-6">
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-brand-purple"></i> Membaca & Memahami Teks Informasi</li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-brand-purple"></i> Membaca & Memahami Teks Fiksi/Sastra</li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-brand-purple"></i> Pemahaman Tekstual & Inferensial</li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-brand-purple"></i> Evaluasi dan Apresiasi Isi Bacaan</li>
+              </ul>
+            </div>
+
+            <button onclick="navigateTo('home')" class="w-full bg-brand-purple text-white font-bold py-3.5 rounded-2xl text-xs sm:text-sm hover:opacity-90 transition">
+              Latihan Soal Bahasa Indonesia
+            </button>
+          </div>
+
+          <div class="bg-white rounded-3xl border border-brand-purple/10 soft-shadow p-6 sm:p-8 flex flex-col justify-between">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl font-bold mb-6">
+                <i class="fa-solid fa-calculator"></i>
+              </div>
+              <h3 class="text-2xl font-black text-brand-navy mb-3">Matematika</h3>
+              <p class="text-xs text-gray-500 font-medium leading-relaxed mb-6">
+                Mengukur kemampuan numerasi, konsep hitung bilangan, geometri, analisis data, serta penalaran pemecahan masalah sehari-hari.
+              </p>
+              
+              <h4 class="font-extrabold text-xs sm:text-sm text-brand-navy uppercase tracking-wider mb-3">Kompetensi Utama:</h4>
+              <ul class="space-y-2.5 text-xs text-gray-700 font-semibold mb-6">
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-500"></i> Bilangan & Operasi Hitung Campuran</li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-500"></i> Geometri, Bangun Datar & Pengukuran</li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-500"></i> Pengolahan & Data Penyajian Diagram</li>
+                <li class="flex items-center gap-2.5"><i class="fa-solid fa-circle-check text-emerald-500"></i> Penalaran & Pemecahan Masalah (HOTS)</li>
+              </ul>
+            </div>
+
+            <button onclick="navigateTo('home')" class="w-full bg-emerald-600 text-white font-bold py-3.5 rounded-2xl text-xs sm:text-sm hover:opacity-90 transition">
+              Latihan Soal Matematika
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // 3. QUIZ ENGINE
+    // ==========================================
+    function renderQuiz() {
+      const main = document.getElementById('mainContainer');
+      const q = activeQuiz.questions[activeQuiz.currentIndex];
+
+      if(!q) {
+        navigateTo('home');
+        return;
+      }
+
+      // Countdown Handler
+      if(currentQuizMode === 'simulation' && !activeQuiz.timerInterval && !activeQuiz.isFinished) {
+        activeQuiz.timerInterval = setInterval(() => {
+          activeQuiz.timeRemaining--;
+          updateTimerDisplay();
+          if(activeQuiz.timeRemaining <= 0) {
+            clearInterval(activeQuiz.timerInterval);
+            activeQuiz.timerInterval = null;
+            finishQuiz();
+          }
+        }, 1000);
+      }
+
+      main.innerHTML = `
+        <div class="bg-white rounded-2xl p-4 border border-brand-purple/10 soft-shadow mb-6 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <button onclick="confirmExitQuiz()" class="w-9 h-9 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center transition">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div>
+              <h3 class="font-extrabold text-brand-navy text-sm sm:text-base leading-tight">${activeQuiz.packageName}</h3>
+              <span class="text-xs text-brand-purple font-extrabold">${q.subject} • Mode: ${currentQuizMode === 'simulation' ? 'Simulasi' : 'Latihan Santai'}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            ${currentQuizMode === 'simulation' ? `
+              <div class="flex items-center gap-2 bg-rose-50 border border-rose-200 text-rose-600 px-4 py-2 rounded-xl font-extrabold text-xs sm:text-sm" id="timerDisplay">
+                <i class="fa-solid fa-clock"></i>
+                <span>${formatTime(activeQuiz.timeRemaining)}</span>
+              </div>
+            ` : `
+              <div class="flex items-center gap-2 bg-brand-mintLight text-emerald-700 px-4 py-2 rounded-xl font-bold text-xs">
+                <i class="fa-solid fa-infinity"></i> Mode Santai
+              </div>
+            `}
+            <button onclick="confirmFinishQuiz()" class="bg-brand-purple hover:bg-opacity-90 text-white font-extrabold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md transition">
+              Selesai & Kumpulkan
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div class="lg:col-span-3 space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-purple/10 soft-shadow">
+              
+              <div class="flex justify-between items-center mb-6 border-b border-gray-100 pb-4">
+                <div class="flex items-center gap-2">
+                  <span class="w-8 h-8 rounded-xl bg-brand-purple text-white font-black text-sm flex items-center justify-center">
+                    ${activeQuiz.currentIndex + 1}
+                  </span>
+                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Dari ${activeQuiz.questions.length} Soal</span>
+                </div>
+
+                <button onclick="toggleFlagCurrentQuestion()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold ${activeQuiz.flagged[q.id] ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'} transition">
+                  <i class="fa-solid fa-bookmark"></i>
+                  <span>${activeQuiz.flagged[q.id] ? 'Ragu-ragu' : 'Tandai Ragu'}</span>
+                </button>
+              </div>
+
+              ${q.stimulus ? `
+                <div class="bg-brand-cream border border-brand-purple/10 p-4 sm:p-5 rounded-2xl mb-6 text-xs sm:text-sm text-brand-navy leading-relaxed font-medium">
+                  ${q.stimulus}
+                </div>
+              ` : ''}
+
+              <div class="text-sm sm:text-base font-bold text-brand-navy mb-6 leading-snug">
+                ${q.question}
+              </div>
+
+              <div class="space-y-3 mb-8">
+                ${renderQuizOptions(q)}
+              </div>
+
+              ${currentQuizMode === 'practice' && activeQuiz.userAnswers[q.id] !== undefined ? `
+                <div class="mt-6 p-5 rounded-2xl ${isAnswerCorrect(q, activeQuiz.userAnswers[q.id]) ? 'bg-emerald-50 border border-emerald-200' : 'bg-rose-50 border border-rose-200'} transition">
+                  <div class="flex items-center gap-2 font-black text-xs sm:text-sm mb-2 ${isAnswerCorrect(q, activeQuiz.userAnswers[q.id]) ? 'text-emerald-700' : 'text-rose-700'}">
+                    <i class="fa-solid ${isAnswerCorrect(q, activeQuiz.userAnswers[q.id]) ? 'fa-circle-check' : 'fa-circle-xmark'}"></i>
+                    <span>${isAnswerCorrect(q, activeQuiz.userAnswers[q.id]) ? 'Jawaban Kamu Tepat!' : 'Jawaban Kurang Tepat'}</span>
+                  </div>
+                  <p class="text-xs text-gray-700 font-medium leading-relaxed">
+                    <strong>Pembahasan Bu Nadzif:</strong> ${q.explanation}
+                  </p>
+                </div>
+              ` : ''}
+
+              <div class="flex justify-between items-center border-t border-gray-100 pt-6">
+                <button onclick="prevQuestion()" ${activeQuiz.currentIndex === 0 ? 'disabled class="opacity-40 cursor-not-allowed bg-gray-100 text-gray-400 font-bold px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm"' : 'class="bg-brand-purpleLight text-brand-purple hover:bg-brand-purple/20 font-bold px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm transition flex items-center gap-2"'}>
+                  <i class="fa-solid fa-chevron-left"></i> Sebelumnya
+                </button>
+
+                <button onclick="nextQuestion()" ${activeQuiz.currentIndex === activeQuiz.questions.length - 1 ? 'disabled class="opacity-40 cursor-not-allowed bg-gray-100 text-gray-400 font-bold px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm"' : 'class="bg-brand-purple text-white hover:bg-opacity-90 font-bold px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm transition flex items-center gap-2"'}>
+                  Berikutnya <i class="fa-solid fa-chevron-right"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="lg:col-span-1">
+            <div class="bg-white rounded-3xl p-5 border border-brand-purple/10 soft-shadow sticky top-24">
+              <h4 class="font-extrabold text-brand-navy text-sm mb-3">Navigasi Nomor Soal</h4>
+              
+              <div class="mb-4">
+                <div class="flex justify-between text-xs font-bold text-gray-500 mb-1">
+                  <span>Terjawab</span>
+                  <span>${Object.keys(activeQuiz.userAnswers).length} / ${activeQuiz.questions.length}</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+                  <div class="bg-brand-purple h-full transition-all duration-300" style="width: ${(Object.keys(activeQuiz.userAnswers).length / activeQuiz.questions.length) * 100}%"></div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-5 gap-2 mb-6">
+                ${activeQuiz.questions.map((item, idx) => {
+                  const isCurrent = idx === activeQuiz.currentIndex;
+                  const isAnswered = activeQuiz.userAnswers[item.id] !== undefined && activeQuiz.userAnswers[item.id].length > 0;
+                  const isFlagged = activeQuiz.flagged[item.id];
+
+                  let btnClass = "bg-gray-100 text-gray-600 border-gray-200";
+                  if(isAnswered) btnClass = "bg-brand-purple text-white border-brand-purple";
+                  if(isFlagged) btnClass = "bg-amber-400 text-brand-navy border-amber-500 font-black";
+                  if(isCurrent) btnClass += " ring-2 ring-offset-2 ring-brand-purple font-black";
+
+                  return `
+                    <button onclick="jumpToQuestion(${idx})" class="h-10 rounded-xl font-extrabold text-xs flex items-center justify-center border transition ${btnClass}">
+                      ${idx + 1}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+
+              <div class="space-y-2 text-[11px] font-bold text-gray-500 pt-3 border-t border-gray-100">
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-md bg-brand-purple inline-block"></span> Sudah Dijawab
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-md bg-amber-400 inline-block"></span> Ragu-ragu
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="w-3 h-3 rounded-md bg-gray-100 border border-gray-300 inline-block"></span> Belum Dijawab
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      renderMathTypesetting();
+    }
+
+    function renderQuizOptions(q) {
+      const currentAns = activeQuiz.userAnswers[q.id] || [];
+
+      if(q.type === 'PG' || q.type === 'BS') {
+        return q.options.map((opt, idx) => {
+          const isSelected = currentAns.includes(idx);
+          return `
+            <div onclick="selectSingleOption(${q.id}, ${idx})" class="p-4 rounded-2xl border-2 transition cursor-pointer flex items-center gap-3 ${isSelected ? 'border-brand-purple bg-brand-purpleLight/40 font-bold text-brand-navy' : 'border-gray-100 hover:border-gray-300 bg-white text-gray-700'}">
+              <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 ${isSelected ? 'border-brand-purple bg-brand-purple text-white' : 'border-gray-300'}">
+                ${isSelected ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+              </div>
+              <span class="text-xs sm:text-sm font-medium">${opt}</span>
+            </div>
+          `;
+        }).join('');
+      } else if(q.type === 'PGK-MCMA') {
+        return q.options.map((opt, idx) => {
+          const isSelected = currentAns.includes(idx);
+          return `
+            <div onclick="toggleMultipleOption(${q.id}, ${idx})" class="p-4 rounded-2xl border-2 transition cursor-pointer flex items-center gap-3 ${isSelected ? 'border-brand-purple bg-brand-purpleLight/40 font-bold text-brand-navy' : 'border-gray-100 hover:border-gray-300 bg-white text-gray-700'}">
+              <div class="w-6 h-6 rounded-lg border-2 flex items-center justify-center shrink-0 ${isSelected ? 'border-brand-purple bg-brand-purple text-white' : 'border-gray-300'}">
+                ${isSelected ? '<i class="fa-solid fa-check text-xs"></i>' : ''}
+              </div>
+              <span class="text-xs sm:text-sm font-medium">${opt}</span>
+            </div>
+          `;
+        }).join('');
+      }
+    }
+
+    function selectSingleOption(qId, optIndex) {
+      activeQuiz.userAnswers[qId] = [optIndex];
+      renderQuiz();
+    }
+
+    function toggleMultipleOption(qId, optIndex) {
+      let current = activeQuiz.userAnswers[qId] || [];
+      if(current.includes(optIndex)) {
+        current = current.filter(i => i !== optIndex);
+      } else {
+        current.push(optIndex);
+      }
+      activeQuiz.userAnswers[qId] = current;
+      renderQuiz();
+    }
+
+    function toggleFlagCurrentQuestion() {
+      const q = activeQuiz.questions[activeQuiz.currentIndex];
+      activeQuiz.flagged[q.id] = !activeQuiz.flagged[q.id];
+      renderQuiz();
+    }
+
+    function jumpToQuestion(idx) {
+      activeQuiz.currentIndex = idx;
+      renderQuiz();
+    }
+
+    function prevQuestion() {
+      if(activeQuiz.currentIndex > 0) {
+        activeQuiz.currentIndex--;
+        renderQuiz();
+      }
+    }
+
+    function nextQuestion() {
+      if(activeQuiz.currentIndex < activeQuiz.questions.length - 1) {
+        activeQuiz.currentIndex++;
+        renderQuiz();
+      }
+    }
+
+    function updateTimerDisplay() {
+      const el = document.getElementById('timerDisplay');
+      if(el) {
+        el.querySelector('span').innerText = formatTime(activeQuiz.timeRemaining);
+      }
+    }
+
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function isAnswerCorrect(q, userAnsArray) {
+      if(!userAnsArray || userAnsArray.length === 0) return false;
+      if(userAnsArray.length !== q.correctKeys.length) return false;
+      const sortedUser = [...userAnsArray].sort();
+      const sortedKeys = [...q.correctKeys].sort();
+      return sortedUser.every((val, index) => val === sortedKeys[index]);
+    }
+
+    function confirmExitQuiz() {
+      if(confirm('Apakah kamu yakin ingin keluar dari latihan ini? Progres pengerjaan saat ini tidak akan disimpan.')) {
+        navigateTo('home');
+      }
+    }
+
+    function confirmFinishQuiz() {
+      if (!activeQuiz || !activeQuiz.questions || activeQuiz.isFinished) return;
+      const answeredCount = activeQuiz.questions.filter(q => {
+        const answer = activeQuiz.userAnswers[q.id];
+        return Array.isArray(answer) && answer.length > 0;
+      }).length;
+      const totalCount = activeQuiz.questions.length;
+      const unanswered = totalCount - answeredCount;
+
+      document.getElementById('finishQuizDialog')?.remove();
+      const dialog = document.createElement('div');
+      dialog.id = 'finishQuizDialog';
+      dialog.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
+      dialog.innerHTML = `
+        <div class="absolute inset-0 bg-slate-900/50" data-cancel-finish="true"></div>
+        <section role="dialog" aria-modal="true" aria-labelledby="finishDialogTitle" class="relative w-full max-w-md rounded-3xl bg-white p-6 sm:p-8 shadow-2xl">
+          <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl ${unanswered ? 'bg-amber-100 text-amber-600' : 'bg-brand-purpleLight text-brand-purple'} text-2xl">
+            <i class="fa-solid ${unanswered ? 'fa-circle-exclamation' : 'fa-paper-plane'}"></i>
+          </div>
+          <h3 id="finishDialogTitle" class="mb-2 text-center text-xl font-black text-brand-navy">Kumpulkan Jawaban?</h3>
+          <p class="mb-6 text-center text-sm leading-relaxed text-gray-600">Kamu sudah menjawab <strong>${answeredCount} dari ${totalCount} soal</strong>${unanswered ? `. Masih ada <strong class="text-amber-600">${unanswered} soal yang belum dijawab</strong>.` : '.'} Setelah dikumpulkan, jawaban tidak dapat diubah.</p>
+          <div class="flex flex-col-reverse gap-3 sm:flex-row">
+            <button type="button" data-cancel-finish="true" class="flex-1 rounded-xl bg-gray-100 px-4 py-3 font-extrabold text-gray-700">Periksa Kembali</button>
+            <button type="button" id="confirmFinishNow" class="flex-1 rounded-xl bg-brand-purple px-4 py-3 font-extrabold text-white shadow-md">Ya, Kumpulkan</button>
+          </div>
+        </section>`;
+      document.body.appendChild(dialog);
+      dialog.querySelectorAll('[data-cancel-finish="true"]').forEach(el => el.addEventListener('click', () => dialog.remove()));
+      dialog.querySelector('#confirmFinishNow').addEventListener('click', () => {
+        dialog.remove();
+        finishQuiz();
+      });
+    }
+
+    function finishQuiz() {
+      if (!activeQuiz || !activeQuiz.questions || activeQuiz.isFinished) return;
+      if(activeQuiz.timerInterval) {
+        clearInterval(activeQuiz.timerInterval);
+        activeQuiz.timerInterval = null;
+      }
+      activeQuiz.isFinished = true;
+      activeQuiz.endTime = new Date();
+
+      let correctIndo = 0, totalIndo = 0;
+      let correctMath = 0, totalMath = 0;
+
+      activeQuiz.questions.forEach(q => {
+        const uAns = activeQuiz.userAnswers[q.id];
+        const correct = isAnswerCorrect(q, uAns);
+
+        if(q.subject === 'Bahasa Indonesia') {
+          totalIndo++;
+          if(correct) correctIndo++;
+        } else {
+          totalMath++;
+          if(correct) correctMath++;
+        }
+      });
+
+      const totalCorrect = correctIndo + correctMath;
+      const finalScore = Math.round((totalCorrect / activeQuiz.questions.length) * 100);
+      const scoreIndo = Math.round((correctIndo / (totalIndo || 1)) * 100);
+      const scoreMath = Math.round((correctMath / (totalMath || 1)) * 100);
+
+      const timeSpentSecs = Math.max(1, Math.round((activeQuiz.endTime - (activeQuiz.startTime || new Date())) / 1000));
+      const timeSpentStr = `${Math.floor(timeSpentSecs / 60)} mnt ${timeSpentSecs % 60} det`;
+
+      const unansweredCount = activeQuiz.questions.filter(q => {
+        const answer = activeQuiz.userAnswers[q.id];
+        return !Array.isArray(answer) || answer.length === 0;
+      }).length;
+
+      const historyRecord = {
+        id: 'hist-' + Date.now(),
+        studentName: currentUser.name,
+        packageName: activeQuiz.packageName,
+        date: new Date().toISOString().split('T')[0],
+        score: finalScore,
+        scoreIndo: scoreIndo,
+        scoreMath: scoreMath,
+        unanswered: unansweredCount,
+        timeSpent: timeSpentStr,
+        mode: currentQuizMode === 'simulation' ? 'Simulasi' : 'Latihan'
+      };
+
+      quizHistory.unshift(historyRecord);
+      setStoredData('tka_quiz_history', quizHistory);
+
+      currentUser.xp += finalScore;
+      setStoredData('tka_student_xp', currentUser.xp);
+
+      if(finalScore >= 75 && typeof confetti === 'function') {
+        setTimeout(() => {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        }, 300);
+      }
+
+      activeQuiz.calculatedResults = {
+        finalScore,
+        scoreIndo,
+        scoreMath,
+        totalCorrect,
+        totalWrong: activeQuiz.questions.length - totalCorrect - unansweredCount,
+        totalUnanswered: unansweredCount,
+        timeSpentStr
+      };
+
+      navigateTo('result');
+    }
+
+    // ==========================================
+    // 4. HASIL SIMULASI
+    // ==========================================
+    function renderResult() {
+      const main = document.getElementById('mainContainer');
+      const res = activeQuiz.calculatedResults || { finalScore: 0, scoreIndo: 0, scoreMath: 0, totalCorrect: 0, totalWrong: 0, timeSpentStr: '0 mnt' };
+
+      let badgeTitle = "Pejuang TKA";
+      if(res.finalScore >= 90) badgeTitle = "Juara Master TKA 🏆";
+      else if(res.finalScore >= 75) badgeTitle = "Bintang Belajar ⭐";
+
+      main.innerHTML = `
+        <div class="max-w-3xl mx-auto">
+          <div class="bg-white rounded-3xl p-6 sm:p-10 border border-brand-purple/10 soft-shadow text-center mb-8">
+            <span class="inline-block px-4 py-1.5 rounded-full bg-brand-purpleLight text-brand-purple text-xs font-black uppercase tracking-wider mb-4">
+              Hasil Evaluasi ${activeQuiz.packageName}
+            </span>
+
+            <h2 class="text-2xl sm:text-3xl font-black text-brand-navy mb-1">Selamat, ${currentUser.name}!</h2>
+            <p class="text-xs sm:text-sm text-gray-500 font-semibold mb-6">Kamu telah menyelesaikan pengerjaan soal dengan sungguh-sungguh.</p>
+
+            <div class="w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-gradient-to-br from-brand-purple to-indigo-600 text-white mx-auto flex flex-col items-center justify-center soft-shadow mb-6 border-4 border-brand-cream">
+              <span class="text-[10px] sm:text-xs uppercase font-extrabold tracking-widest text-brand-peach">Skor Akhir</span>
+              <span class="text-4xl sm:text-5xl font-black">${res.finalScore}</span>
+              <span class="text-[10px] text-purple-200">Dari 100 Poin</span>
+            </div>
+
+            <div class="inline-flex items-center gap-2 bg-brand-peachLight text-amber-800 font-extrabold px-4 py-2 rounded-2xl text-xs sm:text-sm mb-6 border border-brand-peach/40">
+              <i class="fa-solid fa-award text-amber-500"></i>
+              <span>Gelar Pencapaian: ${badgeTitle} (+${res.finalScore} XP)</span>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-left border-t border-b border-gray-100 py-6 mb-6">
+              <div>
+                <span class="text-xs text-gray-400 font-bold block">Jawaban Benar</span>
+                <span class="text-base sm:text-lg font-black text-emerald-600"><i class="fa-solid fa-circle-check"></i> ${res.totalCorrect} Soal</span>
+              </div>
+              <div>
+                <span class="text-xs text-gray-400 font-bold block">Jawaban Salah</span>
+                <span class="text-base sm:text-lg font-black text-rose-500"><i class="fa-solid fa-circle-xmark"></i> ${res.totalWrong} Soal</span>
+              </div>
+              <div>
+                <span class="text-xs text-gray-400 font-bold block">Waktu Tempuh</span>
+                <span class="text-base sm:text-lg font-black text-brand-navy"><i class="fa-solid fa-stopwatch"></i> ${res.timeSpentStr}</span>
+              </div>
+              <div>
+                <span class="text-xs text-gray-400 font-bold block">Akurasi</span>
+                <span class="text-base sm:text-lg font-black text-brand-purple"><i class="fa-solid fa-chart-pie"></i> ${res.finalScore}%</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-8">
+              <div class="p-4 rounded-2xl bg-purple-50 border border-purple-100">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs font-black text-brand-purple"><i class="fa-solid fa-book mr-1"></i> Bahasa Indonesia</span>
+                  <span class="text-sm font-black text-brand-navy">${res.scoreIndo}%</span>
+                </div>
+                <div class="w-full bg-purple-200 h-2 rounded-full overflow-hidden">
+                  <div class="bg-brand-purple h-full" style="width: ${res.scoreIndo}%"></div>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-100">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs font-black text-emerald-700"><i class="fa-solid fa-calculator mr-1"></i> Matematika</span>
+                  <span class="text-sm font-black text-brand-navy">${res.scoreMath}%</span>
+                </div>
+                <div class="w-full bg-emerald-200 h-2 rounded-full overflow-hidden">
+                  <div class="bg-emerald-500 h-full" style="width: ${res.scoreMath}%"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-4">
+              <button onclick="navigateTo('review')" class="flex-1 bg-brand-purple hover:bg-opacity-90 text-white font-extrabold py-3.5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-md">
+                <i class="fa-solid fa-magnifying-glass"></i> Lihat Pembahasan Lengkap
+              </button>
+              <button onclick="repeatQuiz()" class="flex-1 bg-brand-mint text-brand-navy hover:bg-opacity-90 font-extrabold py-3.5 rounded-2xl text-xs sm:text-sm transition flex items-center justify-center gap-2">
+                <i class="fa-solid fa-rotate-right"></i> Ulangi Latihan
+              </button>
+              <button onclick="navigateTo('home')" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-extrabold py-3.5 rounded-2xl text-xs sm:text-sm transition">
+                Beranda
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================
+    // 5. PEMBAHASAN DETAIL
+    // ==========================================
+    function renderReview() {
+      const main = document.getElementById('mainContainer');
+
+      main.innerHTML = `
+        <div class="max-w-4xl mx-auto">
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <span class="text-xs font-extrabold uppercase tracking-widest text-brand-purple">Evaluasi Pembelajaran</span>
+              <h2 class="text-2xl font-black text-brand-navy">Pembahasan Detail Soal</h2>
+            </div>
+            <button onclick="navigateTo('result')" class="bg-white border border-brand-purple/20 text-brand-purple font-bold px-4 py-2 rounded-xl text-xs hover:bg-brand-purpleLight transition">
+              <i class="fa-solid fa-arrow-left"></i> Kembali ke Skor
+            </button>
+          </div>
+
+          <div class="space-y-6">
+            ${activeQuiz.questions.map((q, idx) => {
+              const uAns = activeQuiz.userAnswers[q.id] || [];
+              const correct = isAnswerCorrect(q, uAns);
+
+              return `
+                <div class="bg-white rounded-3xl p-6 border ${correct ? 'border-emerald-200' : 'border-rose-200'} soft-shadow">
+                  <div class="flex justify-between items-center mb-4">
+                    <span class="w-7 h-7 rounded-lg ${correct ? 'bg-emerald-500' : 'bg-rose-500'} text-white font-black text-xs flex items-center justify-center">
+                      ${idx + 1}
+                    </span>
+                    <span class="text-xs font-bold px-3 py-1 rounded-full ${correct ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                      ${correct ? '<i class="fa-solid fa-check"></i> Jawaban Benar' : '<i class="fa-solid fa-xmark"></i> Jawaban Salah'}
+                    </span>
+                  </div>
+
+                  ${q.stimulus ? `<div class="bg-brand-cream p-4 rounded-xl text-xs text-gray-700 font-medium mb-4">${q.stimulus}</div>` : ''}
+
+                  <h4 class="font-bold text-brand-navy text-sm mb-4">${q.question}</h4>
+
+                  <div class="space-y-2 mb-4">
+                    ${q.options.map((opt, oIdx) => {
+                      const isUserSelected = uAns.includes(oIdx);
+                      const isKey = q.correctKeys.includes(oIdx);
+
+                      let style = "bg-gray-50 text-gray-600 border-gray-100";
+                      if(isKey) style = "bg-emerald-50 text-emerald-900 border-emerald-300 font-bold";
+                      if(isUserSelected && !isKey) style = "bg-rose-50 text-rose-900 border-rose-300 font-bold";
+
+                      return `
+                        <div class="p-3 rounded-xl border text-xs flex items-center justify-between ${style}">
+                          <span>${opt}</span>
+                          <div class="flex gap-2">
+                            ${isKey ? '<span class="text-[10px] bg-emerald-600 text-white px-2 py-0.5 rounded font-black">Kunci Jawaban</span>' : ''}
+                            ${isUserSelected ? `<span class="text-[10px] ${isKey ? 'bg-emerald-700' : 'bg-rose-600'} text-white px-2 py-0.5 rounded font-black">Pilihanmu</span>` : ''}
+                          </div>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+
+                  <div class="bg-purple-50/60 border border-brand-purple/20 p-4 rounded-2xl">
+                    <h5 class="text-xs font-black text-brand-purple uppercase tracking-wider mb-1">
+                      <i class="fa-solid fa-graduation-cap"></i> Penjelasan Bu Nadzif:
+                    </h5>
+                    <p class="text-xs text-gray-700 font-medium leading-relaxed">
+                      ${q.explanation}
+                    </p>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+      renderMathTypesetting();
+    }
+
+    // ==========================================
+    // 6. DASHBOARD GURU
+    // ==========================================
+    function renderTeacherDashboard() {
+      const main = document.getElementById('mainContainer');
+
+      const totalStudents = new Set(quizHistory.map(h => h.studentName)).size;
+      const totalAttempts = quizHistory.length;
+      const avgScore = Math.round(quizHistory.reduce((acc, curr) => acc + curr.score, 0) / (totalAttempts || 1));
+
+      main.innerHTML = `
+        <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <div class="inline-flex items-center gap-2 text-xs font-extrabold text-brand-purple uppercase tracking-wider mb-1">
+              <i class="fa-solid fa-chalkboard-user"></i> Panel Monitoring Guru
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-brand-navy">Dashboard Evaluasi Kelas VI</h2>
+          </div>
+          <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-5 py-2.5 rounded-2xl text-xs sm:text-sm transition flex items-center gap-2 shadow-md">
+            <i class="fa-solid fa-file-excel"></i> Ekspor Data (CSV)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow">
+            <span class="text-xs font-bold text-gray-400 block">Siswa Aktif Berlatih</span>
+            <span class="text-3xl font-black text-brand-navy">${totalStudents} Siswa</span>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow">
+            <span class="text-xs font-bold text-gray-400 block">Total Sesi Latihan</span>
+            <span class="text-3xl font-black text-brand-purple">${totalAttempts} Kali</span>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow">
+            <span class="text-xs font-bold text-gray-400 block">Rata-Rata Nilai Kelas</span>
+            <span class="text-3xl font-black text-emerald-600">${avgScore} / 100</span>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-brand-purple/10 soft-shadow">
+            <span class="text-xs font-bold text-gray-400 block">Status Integrasi</span>
+            <span class="text-xs font-black text-indigo-600 bg-indigo-50 px-2 py-1 rounded inline-block mt-2">
+              <i class="fa-solid fa-database"></i> Siap Google Sheets Sync
+            </span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-brand-purple/10 soft-shadow overflow-hidden mb-8">
+          <div class="p-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <h3 class="font-extrabold text-brand-navy text-lg">Rekapitulasi Hasil Latihan Siswa</h3>
+            <input type="text" id="teacherSearchInput" onkeyup="filterTeacherTable()" placeholder="Cari nama siswa..." class="px-4 py-2 rounded-xl border border-gray-200 text-xs font-semibold focus:outline-none focus:border-brand-purple w-full sm:w-64" />
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse" id="teacherTable">
+              <thead>
+                <tr class="bg-brand-cream text-brand-navy text-xs font-black uppercase tracking-wider">
+                  <th class="p-4 pl-6">No</th>
+                  <th class="p-4">Nama Siswa</th>
+                  <th class="p-4">Paket Latihan</th>
+                  <th class="p-4">Skor Total</th>
+                  <th class="p-4">B. Indonesia</th>
+                  <th class="p-4">Matematika</th>
+                  <th class="p-4">Mode</th>
+                  <th class="p-4 pr-6">Tanggal</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100 text-xs font-semibold text-gray-700">
+                ${quizHistory.length > 0 ? quizHistory.map((item, idx) => `
+                  <tr class="hover:bg-purple-50/40 transition">
+                    <td class="p-4 pl-6 font-bold text-gray-400">${idx + 1}</td>
+                    <td class="p-4 font-black text-brand-navy">${item.studentName}</td>
+                    <td class="p-4 text-brand-purple font-bold">${item.packageName}</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-lg ${item.score >= 75 ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} font-black">${item.score}</span></td>
+                    <td class="p-4">${item.scoreIndo}%</td>
+                    <td class="p-4">${item.scoreMath}%</td>
+                    <td class="p-4"><span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded font-bold">${item.mode}</span></td>
+                    <td class="p-4 pr-6 text-gray-400">${item.date}</td>
+                  </tr>
+                `).join('') : `
+                  <tr>
+                    <td colspan="8" class="p-8 text-center text-gray-400 italic">Belum ada riwayat pengerjaan siswa.</td>
+                  </tr>
+                `}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function filterTeacherTable() {
+      const input = document.getElementById('teacherSearchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#teacherTable tbody tr');
+
+      rows.forEach(row => {
+        if(row.children.length > 1) {
+          const studentName = row.children[1].innerText.toLowerCase();
+          if(studentName.includes(input)) {
+            row.style.display = '';
+          } else {
+            row.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    function exportToCSV() {
+      if(quizHistory.length === 0) {
+        alert('Belum ada data pengerjaan untuk diekspor.');
+        return;
+      }
+
+      let csvContent = "data:text/csv;charset=utf-8,No,Nama Siswa,Paket Latihan,Skor Total,B Indonesia,Matematika,Mode,Tanggal\n";
+
+      quizHistory.forEach((row, idx) => {
+        csvContent += `${idx + 1},"${row.studentName}","${row.packageName}",${row.score},${row.scoreIndo},${row.scoreMath},${row.mode},${row.date}\n`;
+      });
+
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `Rekap_TKA_Kelas_VI_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // ==========================================
+    // MATERI BELAJAR TKA
+    // ==========================================
+    function renderMaterials(filter = 'Semua') {
+      const main = document.getElementById('mainContainer');
+      const lessons = [
+        {subject:'Bahasa Indonesia',tag:'Teks informasi',icon:'fa-file-lines',title:'Memahami Teks Informasi',
+         concept:'Teks informasi menyampaikan fakta atau pengetahuan. Perhatikan judul, kata kunci, data, urutan proses, dan hubungan antarkalimat. Informasi dapat disajikan sebagai artikel, laporan, pengumuman, tabel, atau petunjuk.',
+         example:'Jika teks membahas panel surya, cari proses perubahan cahaya matahari menjadi listrik, manfaatnya, serta kondisi yang memengaruhi penggunaannya.',
+         steps:['Baca judul untuk menemukan topik.','Tandai kata kunci pada pertanyaan.','Cari bagian teks atau data yang berkaitan.','Cocokkan jawaban dengan bukti di dalam teks.'],
+         tip:'Jangan memilih jawaban hanya karena terdengar masuk akal; pastikan didukung oleh teks.'},
+        {subject:'Bahasa Indonesia',tag:'Teks fiksi',icon:'fa-book-open',title:'Memahami Teks Fiksi',
+         concept:'Teks fiksi berupa cerita rekaan. Unsur pentingnya meliputi tokoh, watak, latar, alur, konflik, penyelesaian, dan amanat.',
+         example:'Tokoh yang mengembalikan dompet meskipun tidak ada orang yang melihat menunjukkan sifat jujur. Pesan ceritanya dapat berupa ajakan untuk tetap jujur.',
+         steps:['Kenali tokoh dan perannya.','Perhatikan tempat dan waktu kejadian.','Temukan masalah atau konflik.','Amati cara tokoh menyelesaikan masalah.','Simpulkan amanat berdasarkan peristiwa.'],
+         tip:'Watak tokoh disimpulkan dari ucapan, tindakan, dan keputusannya.'},
+        {subject:'Bahasa Indonesia',tag:'Pemahaman tekstual',icon:'fa-magnifying-glass',title:'Informasi Tersurat dan Tersirat',
+         concept:'Informasi tersurat disebutkan langsung dalam teks. Informasi tersirat perlu disimpulkan dengan menggabungkan petunjuk yang tersedia.',
+         example:'“Rani membawa payung dan jalanan basah.” Tersurat: Rani membawa payung. Tersirat: mungkin baru saja hujan atau sedang hujan.',
+         steps:['Untuk informasi tersurat, cari kalimat yang menyebutkannya.','Untuk informasi tersirat, kumpulkan beberapa petunjuk.','Pilih simpulan yang paling kuat didukung teks.','Hindari dugaan yang tidak memiliki bukti.'],
+         tip:'Pertanyaan “mengapa”, “bagaimana”, dan “kemungkinan” sering menguji penalaran.'},
+        {subject:'Bahasa Indonesia',tag:'Pemahaman inferensial',icon:'fa-lightbulb',title:'Ide Pokok dan Simpulan',
+         concept:'Ide pokok adalah inti pembahasan paragraf. Kalimat penjelas berisi rincian, contoh, alasan, atau bukti. Simpulan merangkum informasi penting dari teks.',
+         example:'Kalimat tentang memilah sampah, membuat kompos, dan menanam pohon mendukung ide pokok kegiatan menjaga lingkungan.',
+         steps:['Tanyakan hal utama yang dibahas.','Temukan kalimat yang menaungi rincian.','Singkirkan pilihan yang hanya memuat satu detail kecil.','Gabungkan gagasan utama saat membuat simpulan teks.'],
+         tip:'Ide pokok biasanya lebih umum daripada contoh atau rincian.'},
+        {subject:'Bahasa Indonesia',tag:'Evaluasi dan apresiasi',icon:'fa-scale-balanced',title:'Makna Kata, Fakta, dan Pendapat',
+         concept:'Makna kata ditentukan oleh konteks kalimat. Fakta dapat diperiksa kebenarannya. Pendapat berisi penilaian, dugaan, atau pandangan seseorang.',
+         example:'“Perpustakaan buka pukul 08.00” adalah fakta yang dapat dicek. “Perpustakaan itu paling nyaman” adalah pendapat.',
+         steps:['Baca kalimat sebelum dan sesudah kata.','Tentukan makna sesuai konteks.','Periksa apakah pernyataan dapat dibuktikan.','Waspadai kata penilaian seperti terbaik, indah, dan menurut saya.'],
+         tip:'Jangan menentukan makna kata hanya dari satu arti di kamus.'},
+        {subject:'Matematika',tag:'Bilangan',icon:'fa-calculator',title:'Operasi Hitung Bilangan',
+         concept:'Operasi hitung meliputi penjumlahan, pengurangan, perkalian, dan pembagian. Operasi campuran dikerjakan dengan urutan: tanda kurung, perkalian/pembagian, lalu penjumlahan/pengurangan dari kiri ke kanan.',
+         example:'24 + 6 × 3 = 24 + 18 = 42. Jika (24 + 6) × 3, kerjakan tanda kurung dahulu sehingga hasilnya 90.',
+         steps:['Catat informasi yang diketahui.','Tentukan operasi yang sesuai.','Ikuti urutan operasi hitung.','Periksa kembali satuan dan kewajaran hasil.'],
+         tip:'Pada soal cerita, pastikan dahulu apa yang ditanyakan sebelum menghitung.'},
+        {subject:'Matematika',tag:'Bilangan',icon:'fa-pie-chart',title:'Pecahan, Desimal, dan Persen',
+         concept:'Pecahan menyatakan bagian dari keseluruhan. Persen berarti per seratus. Ketiganya dapat menyatakan nilai yang sama dalam bentuk berbeda.',
+         example:'1/2 = 0,5 = 50%. Untuk menjumlahkan pecahan, samakan penyebut terlebih dahulu. Persentase bagian = bagian ÷ keseluruhan × 100%.',
+         steps:['Kenali bentuk bilangan.','Samakan penyebut jika menjumlahkan pecahan.','Gunakan rumus bagian ÷ keseluruhan × 100% untuk persen.','Periksa apakah hasil masuk akal.'],
+         tip:'Ingat 25% = 1/4 dan 50% = 1/2.'},
+        {subject:'Matematika',tag:'Bilangan',icon:'fa-divide',title:'KPK, FPB, dan Perbandingan',
+         concept:'KPK adalah kelipatan persekutuan terkecil, berguna untuk kejadian berulang. FPB adalah faktor persekutuan terbesar, berguna untuk membagi jumlah sama banyak tanpa sisa. Perbandingan menunjukkan hubungan dua besaran.',
+         example:'KPK dari 4 dan 6 adalah 12. FPB dari 12 dan 18 adalah 6. Perbandingan 2 : 3 berarti dua bagian berpasangan dengan tiga bagian.',
+         steps:['Gunakan KPK untuk kejadian yang berulang bersama.','Gunakan FPB untuk pembagian tanpa sisa.','Untuk perbandingan, hitung nilai satu bagian.','Kalikan bagian sesuai kebutuhan soal.'],
+         tip:'“Bersamaan lagi” biasanya mengarah ke KPK; “paket terbanyak tanpa sisa” biasanya mengarah ke FPB.'},
+        {subject:'Matematika',tag:'Geometri dan pengukuran',icon:'fa-shapes',title:'Bangun Datar, Bangun Ruang, dan Satuan',
+         concept:'Keliling adalah panjang garis yang mengelilingi bangun. Luas mengukur daerah di dalam bangun. Volume mengukur isi bangun ruang. Perhatikan satuan panjang, luas, dan volume.',
+         example:'Persegi panjang p = 8 cm dan l = 5 cm: keliling = 2 × (8 + 5) = 26 cm; luas = 8 × 5 = 40 cm². Balok 8 × 5 × 4 cm volumenya 160 cm³.',
+         steps:['Identifikasi bentuk bangun.','Catat ukuran yang diketahui.','Pilih rumus yang sesuai.','Pastikan satuan akhir tepat: cm, cm², atau cm³.'],
+         tip:'Keliling memakai satuan panjang, luas satuan persegi, dan volume satuan kubik.'},
+        {subject:'Matematika',tag:'Data dan penalaran',icon:'fa-chart-column',title:'Membaca Data dan Menarik Kesimpulan',
+         concept:'Data dapat disajikan dalam tabel, diagram batang, diagram garis, atau diagram gambar. Rata-rata = jumlah data ÷ banyak data. Median adalah nilai tengah setelah diurutkan. Modus adalah nilai yang paling sering muncul.',
+         example:'Data 3, 4, 4, 6, 8 memiliki rata-rata 5, median 4, dan modus 4.',
+         steps:['Baca judul dan keterangan tabel/diagram.','Perhatikan satuan dan skala.','Urutkan data jika mencari median.','Hitung sesuai pertanyaan lalu bandingkan hasilnya.'],
+         tip:'Jangan tertukar antara nilai terbesar, median, modus, dan rata-rata.'}
+      ];
+      const shown = filter === 'Semua' ? lessons : lessons.filter(x => x.subject === filter);
+      const activeClass = value => filter === value
+        ? 'bg-brand-purple text-white border-brand-purple'
+        : 'bg-white text-gray-600 border-gray-200 hover:border-brand-purple hover:text-brand-purple';
+      main.innerHTML = `
+        <div class="max-w-6xl mx-auto">
+          <div class="rounded-3xl bg-gradient-to-r from-brand-purple to-indigo-700 text-white p-6 sm:p-9 mb-7 soft-shadow">
+            <span class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-extrabold mb-3"><i class="fa-solid fa-book-open-reader"></i> RUANG BELAJAR</span>
+            <h2 class="text-2xl sm:text-3xl font-black mb-2">Materi Belajar TKA</h2>
+            <p class="text-sm text-purple-100 max-w-2xl">Pahami konsep, pelajari contoh penyelesaian, lalu gunakan tips untuk menghadapi soal latihan.</p>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-6">
+            <button onclick="renderMaterials('Semua')" class="border px-4 py-2 rounded-xl text-xs font-extrabold transition ${activeClass('Semua')}">Semua Materi</button>
+            <button onclick="renderMaterials('Bahasa Indonesia')" class="border px-4 py-2 rounded-xl text-xs font-extrabold transition ${activeClass('Bahasa Indonesia')}">Bahasa Indonesia</button>
+            <button onclick="renderMaterials('Matematika')" class="border px-4 py-2 rounded-xl text-xs font-extrabold transition ${activeClass('Matematika')}">Matematika</button>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            ${shown.map(item => `
+              <article class="bg-white rounded-3xl border border-brand-purple/10 soft-shadow p-5 sm:p-6">
+                <div class="flex items-start gap-3 mb-4">
+                  <div class="w-11 h-11 rounded-xl ${item.subject === 'Bahasa Indonesia' ? 'bg-purple-100 text-brand-purple' : 'bg-emerald-100 text-emerald-700'} flex items-center justify-center text-lg shrink-0"><i class="fa-solid ${item.icon}"></i></div>
+                  <div class="min-w-0"><span class="text-[10px] font-black uppercase tracking-wider text-brand-purple">${item.subject} • ${item.tag}</span><h3 class="text-lg font-black text-brand-navy leading-tight">${item.title}</h3></div>
+                </div>
+                <div class="space-y-4 text-sm">
+                  <section><h4 class="text-xs font-extrabold text-gray-500 uppercase tracking-wide mb-1">Penjelasan Materi</h4><p class="text-gray-700 leading-relaxed">${item.concept}</p></section>
+                  <section class="rounded-2xl bg-brand-cream p-4"><h4 class="text-xs font-extrabold text-brand-purple uppercase tracking-wide mb-1">Contoh</h4><p class="text-gray-700 leading-relaxed">${item.example}</p></section>
+                  <section><h4 class="text-xs font-extrabold text-gray-500 uppercase tracking-wide mb-2">Langkah Memahami Soal</h4><ol class="list-decimal pl-5 space-y-1 text-gray-700">${item.steps.map(step => `<li>${step}</li>`).join('')}</ol></section>
+                  <div class="flex items-start gap-2 border-t border-gray-100 pt-3 text-xs text-emerald-700 font-bold"><i class="fa-solid fa-lightbulb mt-0.5"></i><span>Tips: ${item.tip}</span></div>
+                </div>
+              </article>`).join('')}
+          </div>
+          <div class="mt-8 bg-white border border-brand-purple/10 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div><h3 class="font-extrabold text-brand-navy">Sudah memahami materinya?</h3><p class="text-xs text-gray-500">Uji pemahamanmu melalui lima paket latihan TKA.</p></div>
+            <button onclick="navigateTo('home')" class="bg-brand-purple text-white px-5 py-3 rounded-xl text-xs font-extrabold hover:opacity-90 transition">Pilih Paket Latihan <i class="fa-solid fa-arrow-right ml-1"></i></button>
+          </div>
+        </div>`;
+    }
+
+    // ==========================================
+    // 7. TENTANG APLIKASI
+    // ==========================================
+    function renderAbout() {
+      const main = document.getElementById('mainContainer');
+
+      main.innerHTML = `
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-white rounded-3xl p-8 sm:p-12 border border-brand-purple/10 soft-shadow text-center mb-8">
+            <div class="w-20 h-20 rounded-3xl bg-brand-purple text-white flex items-center justify-center text-4xl mx-auto mb-6 soft-shadow">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            
+            <h2 class="text-3xl font-black text-brand-navy mb-2">RUANG BERLATIH TKA</h2>
+            <p class="text-xs font-extrabold text-brand-purple uppercase tracking-widest mb-6">Belajar • Berlatih • Berprestasi</p>
+            
+            <p class="text-xs sm:text-base text-gray-600 leading-relaxed max-w-2xl mx-auto mb-8">
+              Ruang Berlatih TKA merupakan platform pembelajaran digital interaktif yang dirancang khusus untuk memfasilitasi siswa kelas VI Madrasah Ibtidaiyah (MI) dalam mempersiapkan diri menghadapi Tes Kemampuan Akademik (TKA) secara mandiri, menyenangkan, dan terstruktur.
+            </p>
+
+            <div class="p-6 rounded-2xl bg-brand-cream border border-brand-purple/20 max-w-xl mx-auto text-center mb-6">
+              <span class="text-xs font-black uppercase tracking-wider text-brand-purple block mb-1">Identitas Penggagas & Pengembang</span>
+              <h3 class="text-lg sm:text-xl font-extrabold text-brand-navy mb-2">Dikembangkan dengan sepenuh hati oleh Bu Nadzif ❤️</h3>
+              <p class="text-xs text-gray-600 italic">
+                "Sebuah ruang belajar untuk tumbuh, berlatih, dan meraih prestasi bersama."
+              </p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-3xl border border-brand-purple/10 soft-shadow">
+              <div class="w-10 h-10 rounded-xl bg-purple-100 text-brand-purple flex items-center justify-center font-bold text-lg mb-4">
+                <i class="fa-solid fa-bullseye"></i>
+              </div>
+              <h4 class="font-extrabold text-brand-navy text-base mb-2">Tujuan Platform</h4>
+              <p class="text-xs text-gray-500 leading-relaxed">
+                Membantu siswa membangun rasa percaya diri, ketelitian, serta kemampuan berpikir kritis (HOTS) melalui latihan rutin.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl border border-brand-purple/10 soft-shadow">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg mb-4">
+                <i class="fa-solid fa-laptop-code"></i>
+              </div>
+              <h4 class="font-extrabold text-brand-navy text-base mb-2">Teknologi Modern</h4>
+              <p class="text-xs text-gray-500 leading-relaxed">
+                Didesain dengan antarmuka EdTech ramah anak yang responsif di HP, tablet, maupun komputer tanpa instalasi rumit.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl border border-brand-purple/10 soft-shadow">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-lg mb-4">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <h4 class="font-extrabold text-brand-navy text-base mb-2">Monitoring Guru</h4>
+              <p class="text-xs text-gray-500 leading-relaxed">
+                Dilengkapi panel rekapitulasi data pengerjaan siswa yang dapat diekspor langsung untuk pendampingan belajar.
+              </p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
