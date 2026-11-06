@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,174 +6,52 @@
   <title>Scanner QR - Ruang Bertumbuh</title>
   <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 24px 16px;
-      font-family: Arial, sans-serif;
-      background: #f2f6fc;
-      color: #18365c;
-    }
-    .container {
-      max-width: 520px;
-      margin: 25px auto;
-      padding: 24px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 5px 25px #17365c18;
-    }
-    h1 { font-size: 23px; margin: 0 0 8px; }
-    .subtitle { color: #71839b; line-height: 1.5; }
-    #reader {
-      width: 100%;
-      margin: 22px auto;
-      overflow: hidden;
-      border-radius: 12px;
-    }
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 10px;
-      border: 0;
-      border-radius: 10px;
-      background: #2468b5;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button.secondary { background: #e8eef7; color: #214b7c; }
-    button:disabled { opacity: .5; cursor: not-allowed; }
-    #status {
-      padding: 12px;
-      background: #f1f5fa;
-      border-radius: 10px;
-      color: #52677f;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    #result {
-      display: none;
-      margin-top: 18px;
-      padding: 16px;
-      border: 1px solid #b7d9c5;
-      background: #f0faf3;
-      border-radius: 12px;
-      overflow-wrap: anywhere;
-    }
-    #qrText { font-weight: bold; margin: 10px 0; }
-    .small { font-size: 12px; color: #71839b; }
+    *{box-sizing:border-box}body{margin:0;padding:24px 16px;font-family:Arial,sans-serif;background:#f2f6fc;color:#18365c}
+    .container{max-width:520px;margin:25px auto;padding:24px;background:#fff;border-radius:18px;box-shadow:0 5px 25px #17365c18}
+    h1{font-size:23px;margin:0 0 8px}.subtitle{color:#71839b;line-height:1.5}#reader{width:100%;margin:22px auto;overflow:hidden;border-radius:12px}
+    button{width:100%;padding:14px;margin-top:10px;border:0;border-radius:10px;background:#2468b5;color:#fff;font-size:15px;font-weight:bold;cursor:pointer}
+    button.secondary{background:#e8eef7;color:#214b7c}button:disabled{opacity:.5;cursor:not-allowed}
+    #status{padding:12px;background:#f1f5fa;border-radius:10px;color:#52677f;font-size:14px;line-height:1.5}
+    #result{display:none;margin-top:18px;padding:16px;border:1px solid #b7d9c5;background:#f0faf3;border-radius:12px;overflow-wrap:anywhere}
+    #qrText{font-weight:bold;margin:10px 0}.small{font-size:12px;color:#71839b}
   </style>
 </head>
 <body>
   <main class="container">
     <h1>📷 Scanner QR Siswa</h1>
-    <p class="subtitle">
-      Ruang Bertumbuh Kelas VI<br>
-      MI Mamba’ul Hikmah Karangploso
-    </p>
-
-    <div id="status">Siap memulai pemindaian QR.</div>
+    <p class="subtitle">Ruang Bertumbuh Kelas VI<br>MI Mamba’ul Hikmah Karangploso</p>
+    <div id="status">Buka scanner dari menu Scan & Catat di aplikasi Ruang Bertumbuh agar hasil QR dapat dikirim kembali otomatis.</div>
     <div id="reader"></div>
-
-    <button id="startBtn" onclick="startScanner()">
-      Aktifkan Kamera
-    </button>
-    <button id="stopBtn" class="secondary"
-      onclick="stopScanner()" disabled>
-      Matikan Kamera
-    </button>
-
-    <section id="result">
-      <strong>✅ QR berhasil dibaca!</strong>
-      <p class="small">Isi QR yang terdeteksi:</p>
-      <div id="qrText"></div>
-      <button onclick="copyResult()">Salin Hasil QR</button>
-      <button class="secondary" onclick="scanAgain()">
-        Pindai QR Berikutnya
-      </button>
-    </section>
+    <button id="startBtn" onclick="startScanner()">Aktifkan Kamera</button>
+    <button id="stopBtn" class="secondary" onclick="stopScanner()" disabled>Matikan Kamera</button>
+    <section id="result"><strong>✅ QR berhasil dibaca!</strong><p class="small">Token QR terdeteksi:</p><div id="qrText"></div><p id="sendStatus" class="small"></p><button onclick="copyResult()">Salin Token QR</button><button class="secondary" onclick="scanAgain()">Pindai QR Berikutnya</button></section>
   </main>
-
   <script>
-    let scanner = null;
-    let scannedText = "";
-    let running = false;
-
-    function setStatus(message) {
-      document.getElementById("status").textContent = message;
+    let scanner=null,scannedText='',running=false,alreadySent=false;
+    function setStatus(message){document.getElementById('status').textContent=message;}
+    function sendToApp(token){
+      const status=document.getElementById('sendStatus');
+      if(!window.opener||window.opener.closed){status.textContent='Halaman aplikasi utama tidak terdeteksi. Buka scanner melalui tombol Buka Scanner QR di aplikasi Ruang Bertumbuh.';return;}
+      try{window.opener.postMessage({type:'RB_QR_SCAN',token:token},'*');status.textContent='Token dikirim ke aplikasi utama. Kembali ke tab Ruang Bertumbuh untuk melihat identitas siswa.';}
+      catch(e){status.textContent='Pengiriman gagal: '+(e.message||e);}
     }
-
-    async function startScanner() {
-      if (running) return;
-
-      if (typeof Html5Qrcode === "undefined") {
-        setStatus("Library scanner belum berhasil dimuat. Periksa koneksi internet.");
-        return;
-      }
-
-      try {
-        setStatus("Meminta izin kamera...");
-        document.getElementById("startBtn").disabled = true;
-
-        scanner = new Html5Qrcode("reader");
-
-        await scanner.start(
-          { facingMode: "environment" },
-          {
-            fps: 10,
-            qrbox: { width: 230, height: 230 },
-            aspectRatio: 1
-          },
-          (decodedText) => {
-            scannedText = decodedText;
-            document.getElementById("qrText").textContent = decodedText;
-            document.getElementById("result").style.display = "block";
-            setStatus("QR berhasil dipindai.");
-            stopScanner();
-          },
-          () => {}
-        );
-
-        running = true;
-        document.getElementById("stopBtn").disabled = false;
-        setStatus("Kamera aktif. Arahkan QR siswa ke dalam kotak pemindaian.");
-      } catch (error) {
-        document.getElementById("startBtn").disabled = false;
-        setStatus("Kamera gagal dibuka: " + (error.message || error));
-      }
+    async function startScanner(){
+      if(running)return;
+      if(typeof Html5Qrcode==='undefined'){setStatus('Library scanner belum berhasil dimuat. Periksa koneksi internet.');return;}
+      try{
+        setStatus('Meminta izin kamera...');document.getElementById('startBtn').disabled=true;
+        scanner=new Html5Qrcode('reader');
+        await scanner.start({facingMode:'environment'},{fps:10,qrbox:{width:230,height:230},aspectRatio:1},async decodedText=>{
+          if(alreadySent)return;alreadySent=true;scannedText=decodedText;
+          document.getElementById('qrText').textContent=decodedText;document.getElementById('result').style.display='block';
+          setStatus('QR berhasil dipindai. Mengirim token ke aplikasi...');sendToApp(decodedText);await stopScanner();
+        },()=>{});
+        running=true;document.getElementById('stopBtn').disabled=false;setStatus('Kamera aktif. Arahkan QR siswa ke kotak pemindaian.');
+      }catch(error){document.getElementById('startBtn').disabled=false;setStatus('Kamera gagal dibuka: '+(error.message||error));}
     }
-
-    async function stopScanner() {
-      if (!scanner || !running) return;
-
-      try {
-        await scanner.stop();
-        await scanner.clear();
-      } catch (error) {
-        console.log(error);
-      }
-
-      running = false;
-      document.getElementById("startBtn").disabled = false;
-      document.getElementById("stopBtn").disabled = true;
-    }
-
-    async function scanAgain() {
-      document.getElementById("result").style.display = "none";
-      scannedText = "";
-      await startScanner();
-    }
-
-    async function copyResult() {
-      if (!scannedText) return;
-      try {
-        await navigator.clipboard.writeText(scannedText);
-        setStatus("Hasil QR berhasil disalin.");
-      } catch (error) {
-        setStatus("Tidak bisa menyalin otomatis. Silakan salin teks QR secara manual.");
-      }
-    }
+    async function stopScanner(){if(!scanner||!running){document.getElementById('startBtn').disabled=false;document.getElementById('stopBtn').disabled=true;return;}try{await scanner.stop();await scanner.clear();}catch(error){console.log(error);}running=false;document.getElementById('startBtn').disabled=false;document.getElementById('stopBtn').disabled=true;}
+    async function scanAgain(){document.getElementById('result').style.display='none';scannedText='';alreadySent=false;await startScanner();}
+    async function copyResult(){if(!scannedText)return;try{await navigator.clipboard.writeText(scannedText);setStatus('Token QR berhasil disalin.');}catch(error){setStatus('Tidak bisa menyalin otomatis.');}}
   </script>
 </body>
 </html>
